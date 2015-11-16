@@ -236,7 +236,7 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', function($scope, $http) 
 
     $scope.buttonDep = function(){
         // if($scope.start_date != "" && $scope.end_date != "" && $scope.selectedFilTemp.length != 0){
-        if($scope.selectedFilTemp.length != 0){
+        if($scope.selectedFilters.length != 0){
             $scope.disableButton = false
         }
         else{
@@ -317,6 +317,7 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', function($scope, $http) 
             $scope.data.singleSelect = filterValue
             $scope.FiltersDict[filterName + "-e"] = true
         }    
+        $scope.buttonDep()
     }
 
 

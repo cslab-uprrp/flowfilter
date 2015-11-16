@@ -4,6 +4,7 @@ from silk import *
 import json
 import os
 from engine import *
+from ian import *
 
 print """Content-Type: text/html"""
 print
@@ -29,6 +30,10 @@ if(form.has_key("data")):
 	# 	print 'sip: ', item.sip, "---- dip: ", item.dip, "---- sport: ", item.sport
 	# print flows
 
+	ForceDirected(flows)
+	# f = open('ForceDirected/visForceDirected.html', 'r')
+	# f = f.read()
+	# print f
 
 else:
 	printFilterPage()
