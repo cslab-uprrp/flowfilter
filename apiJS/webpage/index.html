@@ -33,7 +33,7 @@
 		<div ng-app="QuerySelector" ng-controller="QuerySelectorCtrl">
 		 	<p>Name: <input type="text" ng-model="name"></p>
 			<p> {{name}}</p>
-			<form name = "myForm" role="form" method="post" action="justTest.cgi" ng-submit="getResults()">
+			<form role="form" ng-submit="getResults()">
 				<div class = "row">
 					<div class="col-md-3"> 
 						<div class="dropdown">
@@ -58,11 +58,11 @@
 					</div>
 					
 					<div class="col-md-3">
-						Start date: <input name ="startDate" type="date" ng-click = "buttonDep()" ng-model="start_date" value="2015-10-28"/>
+						Start date: <input type="date" ng-click = "buttonDep()" ng-model="start_date" value="2015-10-28"/>
 					</div>
 					
 					<div class="col-md-3">
-						End date: <input name = "endDate" type="date" ng-click = "buttonDep()" ng-model = "end_date" value="2015-10-28"/>
+						End date: <input type="date" ng-click = "buttonDep()" ng-model = "end_date" value="2015-10-28"/>
 					</div>
 				</div>
 			  	<div class="container"> 
