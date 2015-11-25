@@ -9,12 +9,25 @@ from ian import *
 print """Content-Type: text/html"""
 print
 
-# print 'HElloo WOrld' * 5
-# print 
+def receiveData(form):
+	data = form.getvalue("data")
+	data = json.loads(data)
+	startDate = str(data['start'])
+	endDate = str(data['end'])
+	data = data['data']
+
+	return data, startDate, endDate
 
 form = cgi.FieldStorage()
-dta = form.getvalue("dta")
-# dta = json.loads(dta)
-# dta = data['data']
 
-print dta
+if(form.has_key("data")):
+	printFilterPage()
+	data, startDate, endDate = receiveData(form)
+	flows = processData(data, startDate, endDate)
+	print 'len Flows: ' + str(len(flows))
+	graph = ForceDirected(flows)
+	print graph
+
+else:
+	printFilterPage()
+	print "There is no filter..."

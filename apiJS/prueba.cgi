@@ -30,7 +30,8 @@ if(form.has_key("data")):
 	# 	print 'sip: ', item.sip, "---- dip: ", item.dip, "---- sport: ", item.sport
 	# print flows
 
-	ForceDirected(flows)
+	graph = ForceDirected(flows)
+	print graph
 
 else:
 	printFilterPage()

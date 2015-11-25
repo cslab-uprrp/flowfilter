@@ -1,4 +1,5 @@
 var labelType, useGradients, nativeTextSupport, animate;
+var labelType, useGradients, nativeTextSupport, animate;
 
 	(function() {
 	  var ua = navigator.userAgent,

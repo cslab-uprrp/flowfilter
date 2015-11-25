@@ -476,8 +476,8 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
             }
         }).success(function(response) {
             // console.log(response)
-            // updateViz(response)
-            $window.location.href = 'justTest.cgi';
+            updateViz(response)
+            // $window.location.href = 'justTest.cgi';
             // this callback will be called asynchronously
             // when the response is available
           }). 

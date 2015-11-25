@@ -457,7 +457,10 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
 
     $scope.getResults = function(){
         $scope.updateSelectedFilters()
-        $finalData = {data: $scope.selectedFilters}
+        $finalData = {data: $scope.selectedFilters,
+            start: $scope.start_date.getFullYear() + "/" + ($scope.start_date.getMonth()+1) + "/" + $scope.start_date.getDate(),
+            end: $scope.end_date.getFullYear() + "/" + ($scope.end_date.getMonth()+1) + "/" + $scope.end_date.getDate()
+        }
         // console.log(finalData)
         console.log($scope.selectedFilters)
         startDate = $scope.start_date.getFullYear() + "/" + ($scope.start_date.getMonth()+1) + "/" + $scope.start_date.getDate(),
@@ -469,8 +472,9 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
         var theForm = document.forms['myForm'];
         var input = document.createElement('input');
         input.type = 'hidden';
-        input.name = 'dta';
-        input.value = '{"hello": "world!!"}';
+        input.name = 'data';
+        // input.value = '{"hello": "world!!"}';
+        input.value = JSON.stringify($finalData)
         theForm.appendChild(input);
         document.myForm.submit()
 
