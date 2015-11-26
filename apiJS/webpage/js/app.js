@@ -457,27 +457,21 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
 
     $scope.getResults = function(){
         $scope.updateSelectedFilters()
-        finalData = {data: $scope.selectedFilters}
-        // console.log(finalData)
-        console.log($scope.selectedFilters)
-        startDate = $scope.start_date.getFullYear() + "/" + ($scope.start_date.getMonth()+1) + "/" + $scope.start_date.getDate(),
-        endDate = $scope.end_date.getFullYear() + "/" + ($scope.end_date.getMonth()+1) + "/" + $scope.end_date.getDate()
-        console.log("start: " + startDate)
-        console.log("end: " + endDate)
+        $finalData = {data: $scope.selectedFilters,
+            start: $scope.start_date.getFullYear() + "/" + ($scope.start_date.getMonth()+1) + "/" + $scope.start_date.getDate(),
+            end: $scope.end_date.getFullYear() + "/" + ($scope.end_date.getMonth()+1) + "/" + $scope.end_date.getDate()
+        }
+
         $http({
             method: 'GET',
             // url: 'http://lagrange.ccom.uprrp.edu/~jdelacruz/webflows/gui/processData.cgi',
             // url: 'http://wolverine.ccom.uprrp.edu/~jdelacruz/netFlows/processData.cgi',
-            url: 'http://wolverine.ccom.uprrp.edu/~jdelacruz/netFlows/api/prueba.cgi',
+            url: 'http://wolverine.ccom.uprrp.edu/~jdelacruz/netFlows/apiJS/prueba.cgi',
             params: {
-                data:   finalData,
-                        start: $scope.start_date.getFullYear() + "/" + ($scope.start_date.getMonth()+1) + "/" + $scope.start_date.getDate(),
-                        end: $scope.end_date.getFullYear() + "/" + ($scope.end_date.getMonth()+1) + "/" + $scope.end_date.getDate()
+                data:   $finalData
             }
         }).success(function(response) {
-            // console.log(response)
             updateViz(response)
-            // $window.location.href = 'justTest.cgi';
             // this callback will be called asynchronously
             // when the response is available
           }). 

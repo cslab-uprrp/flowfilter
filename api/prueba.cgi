@@ -11,9 +11,9 @@ print
 
 def receiveData(form):
 	data = form.getvalue("data")
-	startDate = form.getvalue("start")
-	endDate = form.getvalue("end")
 	data = json.loads(data)
+	startDate = str(data['start'])
+	endDate = str(data['end'])
 	data = data['data']
 
 	return data, startDate, endDate

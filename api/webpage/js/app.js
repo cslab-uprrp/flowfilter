@@ -461,43 +461,14 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
             start: $scope.start_date.getFullYear() + "/" + ($scope.start_date.getMonth()+1) + "/" + $scope.start_date.getDate(),
             end: $scope.end_date.getFullYear() + "/" + ($scope.end_date.getMonth()+1) + "/" + $scope.end_date.getDate()
         }
-        // console.log(finalData)
-        console.log($scope.selectedFilters)
-        startDate = $scope.start_date.getFullYear() + "/" + ($scope.start_date.getMonth()+1) + "/" + $scope.start_date.getDate(),
-        endDate = $scope.end_date.getFullYear() + "/" + ($scope.end_date.getMonth()+1) + "/" + $scope.end_date.getDate()
-        console.log("start: " + startDate)
-        console.log("end: " + endDate)
-
 
         var theForm = document.forms['myForm'];
         var input = document.createElement('input');
         input.type = 'hidden';
         input.name = 'data';
-        // input.value = '{"hello": "world!!"}';
         input.value = JSON.stringify($finalData)
+        
         theForm.appendChild(input);
         document.myForm.submit()
-
-        // $http({
-        //     method: 'GET',
-        //     // url: 'http://lagrange.ccom.uprrp.edu/~jdelacruz/webflows/gui/processData.cgi',
-        //     // url: 'http://wolverine.ccom.uprrp.edu/~jdelacruz/netFlows/processData.cgi',
-        //     url: 'http://wolverine.ccom.uprrp.edu/~jdelacruz/netFlows/api/prueba.cgi',
-        //     params: {
-        //         data:   finalData,
-        //                 start: $scope.start_date.getFullYear() + "/" + ($scope.start_date.getMonth()+1) + "/" + $scope.start_date.getDate(),
-        //                 end: $scope.end_date.getFullYear() + "/" + ($scope.end_date.getMonth()+1) + "/" + $scope.end_date.getDate()
-        //     }
-        // }).success(function(response) {
-        //     // console.log(response)
-        //     // updateViz(response)
-        //     $window.location.href = 'justTest.cgi';
-        //     // this callback will be called asynchronously
-        //     // when the response is available
-        //   }). 
-        //     error(function(response) {
-        //     // called asynchronously if an error occurs
-        //     // or server returns response with an error status.
-        //   });
     }
 }]);
