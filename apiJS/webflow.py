@@ -30,6 +30,38 @@ def convertIP(values):
 
 	return values
 
+def toJson(silkDic):
+	jsonDic = []
+	for item in silkDic:
+		rJson = {}
+		rJson['sip'] = str(item.sip)
+		rJson['protocol'] = item.protocol
+		rJson['timeout_killed'] = item.timeout_killed
+		rJson['dport'] = item.dport
+		rJson['output'] = item.output
+		rJson['packets'] = item.packets
+		rJson['bytes'] = item.bytes
+		rJson['tcpflags'] = str(item.tcpflags)
+		rJson['uniform_packets'] = item.uniform_packets
+		rJson['application'] = item.application
+		rJson['sensor_id'] = item.sensor_id
+		rJson['timeout_started'] = item.timeout_started
+		rJson['classtype_id'] = item.classtype_id
+		rJson['stime'] = str(item.stime)
+		rJson['nhip'] = str(item.nhip)
+		rJson['duration'] = str(item.duration)
+		rJson['input'] = item.input
+		rJson['sport'] = item.sport
+		rJson['dip'] = str(item.dip)
+		rJson['finnoack'] = item.finnoack
+		jsonDic.append(rJson)
+	# result = {}
+	# result['flows'] = jsonDic
+	jsonDic = json.dumps({'flows': jsonDic})
+	print jsonDic
+	return jsonDic
+
+
 #Helper function to convert the ports numbers to int 
 def convertToInt(values):
 	values = values.split(',')

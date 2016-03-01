@@ -3,8 +3,9 @@ import cgi, cgitb
 from silk import *
 import json
 import os
-from engine import *
+from webflow import *
 from ian import *
+from TreeMap import *
 
 print """Content-Type: text/html"""
 print
@@ -21,12 +22,15 @@ def receiveData(form):
 form = cgi.FieldStorage()
 
 if(form.has_key("data")):
-	printFilterPage()
+	# print "Response"
 	data, startDate, endDate = receiveData(form)
 	flows = processData(data, startDate, endDate)
-	print 'len Flows: ' + str(len(flows))
-	graph = ForceDirected(flows)
-	print graph
+	# print """<h3> Flows: """+str(len(flows))+"""</h3>"""
+	# graph = TreeMap(flows)
+	# graph = ForceDirected(flows)
+	# print graph
+	print toJson(flows)
+	# print len(flows)
 
 else:
 	printFilterPage()

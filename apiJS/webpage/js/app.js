@@ -15,68 +15,62 @@ app.directive('ngHtmlCompile', function($compile) {
 });
 
 app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($scope, $http, $window) {
-    $scope.disableButton = true
+    $scope.disableButton = true //Submit button
 
     $scope.selectedFilTemp = []
     $scope.selectedFilters = []
 
+    // Time period in which the data will be considered
     $scope.start_date = new Date()
     $scope.end_date = new Date()
 
-    $scope.data = {
-     singleSelect: null,
-     multipleSelect: [],
-     option1: 'option-1',
-    };
-
-    $scope.response = ''
-
-
+    // In this dictionary will be the value that the user enter in the form for each filter and also the logic for
+    // each one of them
     $scope.FiltersDict = {
         "logic_input_output": 'and',
         "midLogic_input_output": 'and',
-        //"logic_input" : 'or',
+
         "neg_input": '',
         "input" : "Input interface",
         "input-val": "",
         "input-e": false,
-        // "logic_output": 'or',
+
         "neg_output": '',
         "output": "Output interface",
         "output-val": "",
         "output-e": false,
-        // "logic_srcAS" : 'or',
+
         "logic_srcAS_dstAS": 'and',
         "midLogic_srcAS_dstAS": 'and',
         "neg_srcAS": '',
         "srcAS":"Source AS",
         "srcAS-val": "",
         "srcAS-e": false,
-        // "logic_dstAS" : 'or',
+
         "neg_dstAS": '',
         "dstAS":"Destination AS",
         "dstAS-val": "",
         "dstAS-e": false,
-        // "logic_sip" : 'or',
+
         "logic_sip_dip": 'and',
         "midLogic_sip_dip": 'and',
         "neg_sip": '',
         "sip":"Source IP",
         "sip-val": "",
         "sip-e": false,
-        // "logic_dip" : 'or',
+
         "neg_dip": '',
         "dip":"Destination IP",
         "dip-val": "",
         "dip-e": false,
-        // "logic_sport" : 'or',
+
         "logic_sport_dport": 'and',
         "midLogic_sport_dport": 'and',
         "neg_sport": '',
         "sport":"Source Port",
         "sport-val": "",
         "sport-e": false, 
-        // "logic_dport" : 'or',
+
         "neg_dport": '',
         "dport":"Destination Port",
         "dport-val": "",
@@ -92,7 +86,9 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
         "packets-val": "",
         "packets-op": ">"
     }
-
+    // This template is the html code for the filters form. The template will be used for all the filters except
+    // packets and bytes. When we use this template, we just need to pass the name of the filter and its partner
+    // (i.e. source ip and destination ip) which are going to be name1 and name2 respectively.
     $scope.template = ' \
     <div class="row"> \
         <div class="col-md-1"> \
@@ -170,6 +166,9 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
         </div> \
     </div>'
 
+    // This template is the html code for the filters form. The template will be used for all the filters
+    // packets and bytes. When we use this template, we just need to pass the name of the filter in this case
+    // packets or bytes.
     $scope.templateOp = ' \
         <div class="row"> \
                 <div class="col-md-1"> \
@@ -233,9 +232,8 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
                 </div>\
         </div>\
             '
-
+    // Helper function that decides if the submit button should be disabled or not
     $scope.buttonDep = function(){
-        // if($scope.start_date != "" && $scope.end_date != "" && $scope.selectedFilTemp.length != 0){
         if($scope.selectedFilters.length != 0){
             $scope.disableButton = false
         }
@@ -300,6 +298,8 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
         }
     }
 
+    // Function to add a filter (packets or bytes) to the selected filters dictionary
+    // Also, this function update the corresponding variables in the Filters Dictionary
     $scope.addFilterOp = function(filterName, filterValue){
         if($scope.isSelected(filterName) == -1){   
             logic = 'logic_' + filterName      
@@ -314,13 +314,13 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
 
             $scope.changeTemplateOp(filterName, filterValue) 
             
-            $scope.data.singleSelect = filterValue
             $scope.FiltersDict[filterName + "-e"] = true
         }    
         $scope.buttonDep()
     }
 
-
+    // Function to add all the filter (except packets or bytes) to the selected filters dictionary
+    // Also, this function update the corresponding variables in the Filters Dictionary
     $scope.addFilter = function(filterName, filterValue, secondFilter, inverted){
         if($scope.isSelected(filterName) == -1){            
             if(inverted){
@@ -344,7 +344,6 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
 
             $scope.changeTemplate(filterName, secondFilter, filterValue) 
             
-            $scope.data.singleSelect = filterValue
             $scope.FiltersDict[filterName + "-e"] = true
         }     
         $scope.buttonDep()
@@ -370,6 +369,8 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
         }
     }
 
+    // This function will go throght the templateOp and will replace name1 with the name of the operator (packets
+    //  or bytes)
     $scope.changeTemplateOp = function(filter, filterVal){
         $scope.newTemplateOp = $scope.templateOp
 
@@ -431,31 +432,25 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
                 return false
             }
         }
-        // if($scope.selectedFilters.length >= 2){
-        //     firstFilter = $scope.selectedFilters[0].name
-        //     if($scope.selectedFilters[0].name == filter1 || $scope.selectedFilters[0].name == filter2){
-        //         return false
-        //     }
-        //     else if($scope.isSelected(filter1) >= 0 || $scope.isSelected(filter2) >= 0){
-        //         return true
-        //     }
-        //     else{
-        //         return false
-        //     }
-        // }
         else{
             return false
         }
     }
 
+    // This function will update the value of a filter when the user change it in the form
     $scope.updateSelectedFilters = function(){
         for (var i = 0; i < $scope.selectedFilters.length; i++) {
             var filterName = $scope.selectedFilters[i].name
             $scope.selectedFilters[i].value = $scope.FiltersDict[filterName+"-val"]
         }
     }
-
+    
+    // This function will be called when the user submit the form. When that happen the updateSelectedFilters function
+    // will be called to update the filters with the last values the user entered. Then, we submit the form to 
+    // filter the data in the server
     $scope.getResults = function(){
+        $('#pleaseWaitDialog').modal('show');
+
         $scope.updateSelectedFilters()
         $finalData = {data: $scope.selectedFilters,
             start: $scope.start_date.getFullYear() + "/" + ($scope.start_date.getMonth()+1) + "/" + $scope.start_date.getDate(),
@@ -466,12 +461,13 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
             method: 'GET',
             // url: 'http://lagrange.ccom.uprrp.edu/~jdelacruz/webflows/gui/processData.cgi',
             // url: 'http://wolverine.ccom.uprrp.edu/~jdelacruz/netFlows/processData.cgi',
-            url: 'http://wolverine.ccom.uprrp.edu/~jdelacruz/netFlows/apiJS/prueba.cgi',
+            url: 'http://wolverine.ccom.uprrp.edu/~jdelacruz/netFlows/apiJS/engine.cgi',
             params: {
                 data:   $finalData
             }
         }).success(function(response) {
             updateViz(response)
+            $('#pleaseWaitDialog').modal('hide');
             // this callback will be called asynchronously
             // when the response is available
           }). 

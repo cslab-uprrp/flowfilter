@@ -26,16 +26,19 @@
 		<!-- Custom CSS -->
 		<link rel="stylesheet" type="text/css" href="http://wolverine.ccom.uprrp.edu/~jdelacruz/netFlows/api/webpage/css/main.css">
 
+
+		<!-- // <script src="//cdn.jsdelivr.net/webshim/1.14.5/polyfiller.js"></script> -->
 	</head>
 	
 	<body>
-		<div class="container">
+		<!-- <div class="container"> -->
 		<div ng-app="QuerySelector" ng-controller="QuerySelectorCtrl">
-		 	<p>Name: <input type="text" ng-model="name"></p>
-			<p> {{name}}</p>
-			<form name = "myForm" role="form" method="post" action="../justTest.cgi" ng-submit="getResults()">
-				<div class = "row">
-					<div class="col-md-3"> 
+		 	<!-- <p>Name: <input type="text" ng-model="name"></p> -->
+			<!-- <p> {{name}}</p> -->
+			<form name = "myForm" role="form" method="post" action="http://wolverine.ccom.uprrp.edu/~jdelacruz/netFlows/api/engine.cgi" ng-submit="getResults()">
+				<div class = "row" id = "selectorRow">
+					<!-- <div class="col-md-3">  -->
+					<div class="grid-left" style="float: left;width: 30%;">
 						<div class="dropdown">
 
 						    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">--- Select Filter ---
@@ -45,8 +48,8 @@
 						    <ul class="dropdown-menu">
 							    <li ng-click="addFilter('input','Input interface', 'output', 0)">	<a href="#">Input interface</a></li>
 							    <li ng-click="addFilter('output', 'Output interface', 'input', 1)">	<a href="#">Output interface</a></li>
-							    <li ng-click="addFilter('srcAS','Source AS', 'dstAS', 0)">			<a href="#">Source AS</a></li>
-							    <li ng-click="addFilter('dstAS','Destination AS', 'srcAS', 1)">		<a href="#">Destination AS</a></li>
+							    <!-- <li ng-click="addFilter('srcAS','Source AS', 'dstAS', 0)">			<a href="#">Source AS</a></li> -->
+							    <!-- <li ng-click="addFilter('dstAS','Destination AS', 'srcAS', 1)">		<a href="#">Destination AS</a></li> -->
 							    <li ng-click="addFilter('sip','Source IP', 'dip', 0)">			<a href="#">Source IP</a></li>
 							    <li ng-click="addFilter('dip','Destination IP', 'sip', 1)">		<a href="#">Destination IP</a></li>
 							    <li ng-click="addFilter('sport','Source Port', 'dport', 0)">		<a href="#">Source Port</a></li>
@@ -56,15 +59,17 @@
 						    </ul>
 					  	</div>
 					</div>
-					
-					<div class="col-md-3">
+					<div class="grid-right">
+					<!-- <div class="col-md-3"> -->
 						Start date: <input name ="startDate" type="date" ng-click = "buttonDep()" ng-model="start_date" value="2015-10-28"/>
-					</div>
+					<!-- </div> -->
 					
-					<div class="col-md-3">
+					<!-- <div class="col-md-3"> -->
 						End date: <input name = "endDate" type="date" ng-click = "buttonDep()" ng-model = "end_date" value="2015-10-28"/>
 					</div>
+					<!-- </div> -->
 				</div>
+				
 			  	<div class="container"> 
 			  		<div ng-repeat="filter in selectedFilTemp" ng-html-compile="filter.template">
 			  			{{filter.template}}
@@ -75,23 +80,40 @@
 			  		<!-- <input type="submit" class="btn btn-default" style="width: 50%;" ng-disabled="disableButton" value="Submit"> -->
 				</div>
 		  	</form>
-
-		  	<p>singleSelect = {{data.singleSelect}} {{data.option1}}</p>
-		  	<ul>
+<!-- 		  	<ul>
 	  	  		<li ng-repeat="(name, value) in selectedFilters">
 		    		{{ name }} : {{value}}
 		  		</li>
-		  	</ul>
+		  	</ul> -->
+		<div class="container">
+			<div class="modal fade" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false" role="dialog">
+				<div class="modal-dialog">
+			        <div class="modal-content"> 
+				        <div class="modal-header">
+				            <h1>Processing...</h1>
+				        </div>
+				        <div class="modal-body">
+							<div class="progress">
+							  <div class="progress-bar progress-bar-striped active" role="progressbar"
+							  aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+							  </div>
+							</div>
+				        </div>
+			    	</div>
+		    	</div>
+		    </div>
+		</div>
 		<script>
 				// dynamically activate list items when clicked
 				$(".nav.nav-pills li").on("click",function(){
 				  $(".nav.nav-pills li").removeClass("active");
 				  $(this).addClass("active");
 				});
+
+				// webshims.setOptions('forms-ext', {types: 'date'});
+				// webshims.polyfill('forms forms-ext');
 		</script>
-			<div id="vizDate">
-				papaupapa
-			</div>
 		</div>
+		<!-- </div> -->
 	</body>
 </html>

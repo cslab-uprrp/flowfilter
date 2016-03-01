@@ -2677,8 +2677,8 @@ Extras.Classes.Navigation = new Class({
 /*
  Class: Canvas
  
-  A canvas widget used by all visualizations. The canvas object can be accessed by doing *viz.canvas*. If you want to 
-  know more about <Canvas> options take a look at <Options.Canvas>.
+ 	A canvas widget used by all visualizations. The canvas object can be accessed by doing *viz.canvas*. If you want to 
+ 	know more about <Canvas> options take a look at <Options.Canvas>.
  
  A canvas widget is a set of DOM elements that wrap the native canvas DOM Element providing a consistent API and behavior 
  across all browsers. It can also include Elements to add DOM (SVG or HTML) label support to all visualizations.
@@ -2688,33 +2688,33 @@ Extras.Classes.Navigation = new Class({
  Suppose we have this HTML
  
  (start code xml)
-  <div id="infovis"></div>
+ 	<div id="infovis"></div>
  (end code)
  
  Now we create a new Visualization
  
  (start code js)
-  var viz = new $jit.Viz({
-    //Where to inject the canvas. Any div container will do.
-    'injectInto':'infovis',
-     //width and height for canvas. 
-     //Default's to the container offsetWidth and Height.
-     'width': 900,
-     'height':500
-   });
+ 	var viz = new $jit.Viz({
+ 		//Where to inject the canvas. Any div container will do.
+ 		'injectInto':'infovis',
+		 //width and height for canvas. 
+		 //Default's to the container offsetWidth and Height.
+		 'width': 900,
+		 'height':500
+	 });
  (end code)
 
  The generated HTML will look like this
  
  (start code xml)
  <div id="infovis">
-  <div id="infovis-canvaswidget" style="position:relative;">
-  <canvas id="infovis-canvas" width=900 height=500
-  style="position:absolute; top:0; left:0; width:900px; height:500px;" />
-  <div id="infovis-label"
-  style="overflow:visible; position:absolute; top:0; left:0; width:900px; height:0px">
-  </div>
-  </div>
+ 	<div id="infovis-canvaswidget" style="position:relative;">
+ 	<canvas id="infovis-canvas" width=900 height=500
+ 	style="position:absolute; top:0; left:0; width:900px; height:500px;" />
+ 	<div id="infovis-label"
+ 	style="overflow:visible; position:absolute; top:0; left:0; width:900px; height:0px">
+ 	</div>
+ 	</div>
  </div>
  (end code)
  
@@ -6112,8 +6112,8 @@ var NodeHelper = {
           diff = 0;
 
       if (width > height) {
-        radius = width / 2;
-        scaley = height / width;
+	      radius = width / 2;
+	      scaley = height / width;
       } else {
           radius = height / 2;
           scalex = width / height;
@@ -7887,9 +7887,9 @@ var Loader = {
                   // The node was not defined in the JSON
                   // Let's create it
                   var newNode = {
-                    "id" : id,
-                    "name" : id
-                  };
+                		"id" : id,
+                		"name" : id
+                	};
                   return ans.addNode(newNode);
                 };
 
@@ -8505,7 +8505,7 @@ $jit.ST= (function() {
       var graph = this.graph;
       var canvas = this.canvas;
       var level = node._depth, nodeArray = [];
-      graph.eachNode(function(n) {
+  	  graph.eachNode(function(n) {
           if(n.exist && !n.selected) {
               if(n.isDescendantOf(node.id)) {
                 if(n._depth <= level) nodeArray.push(n);
@@ -8513,19 +8513,19 @@ $jit.ST= (function() {
                 nodeArray.push(n);
               }
           }
-      });
-      var leafLevel = Geom.getRightLevelToShow(node, canvas);
-      node.eachLevel(leafLevel, leafLevel, function(n) {
+  	  });
+  	  var leafLevel = Geom.getRightLevelToShow(node, canvas);
+  	  node.eachLevel(leafLevel, leafLevel, function(n) {
           if(n.exist && !n.selected) nodeArray.push(n);
-      });
-        
-      for (var i = 0; i < nodesInPath.length; i++) {
-        var n = this.graph.getNode(nodesInPath[i]);
-        if(!n.isDescendantOf(node.id)) {
-          nodeArray.push(n);
-        }
-      } 
-      return nodeArray;       
+  	  });
+  	    
+  	  for (var i = 0; i < nodesInPath.length; i++) {
+  	    var n = this.graph.getNode(nodesInPath[i]);
+  	    if(!n.isDescendantOf(node.id)) {
+  	      nodeArray.push(n);
+  	    }
+  	  } 
+  	  return nodeArray;       
     };
     // Nodes to expand
      function getNodesToShow(node) {
@@ -8533,8 +8533,8 @@ $jit.ST= (function() {
         node = node || this.clickedNode;
         this.clickedNode.eachLevel(0, config.levelsToShow, function(n) {
             if(config.multitree && !('$orn' in n.data) 
-                && n.anySubnode(function(ch){ return ch.exist && !ch.drawn; })) {
-              nodeArray.push(n);
+            		&& n.anySubnode(function(ch){ return ch.exist && !ch.drawn; })) {
+            	nodeArray.push(n);
             } else if(n.drawn && !n.anySubnode("drawn")) {
               nodeArray.push(n);
             }
@@ -8633,9 +8633,9 @@ $jit.ST= (function() {
                       that.compute('end', false);
                       Plot.busy = false;
                       if(method == 'animate') {
-                        that.onClick(that.clickedNode.id, onComplete);  
+                    	  that.onClick(that.clickedNode.id, onComplete);  
                       } else if(method == 'replot') {
-                        that.select(that.clickedNode.id, onComplete);
+                    	  that.select(that.clickedNode.id, onComplete);
                       }
                   }
               }, pos);
@@ -8666,9 +8666,9 @@ $jit.ST= (function() {
        switchAlignment: function(align, method, onComplete) {
         this.config.align = align;
         if(method == 'animate') {
-          this.select(this.clickedNode.id, onComplete);
+        	this.select(this.clickedNode.id, onComplete);
         } else if(method == 'replot') {
-          this.onClick(this.clickedNode.id, onComplete);  
+        	this.onClick(this.clickedNode.id, onComplete);	
         }
        },
 
@@ -8818,45 +8818,45 @@ $jit.ST= (function() {
         (end code)
      */
      setRoot: function(id, method, onComplete) {
-          if(this.busy) return;
-          this.busy = true;
+        	if(this.busy) return;
+        	this.busy = true;
           var that = this, canvas = this.canvas;
-          var rootNode = this.graph.getNode(this.root);
-          var clickedNode = this.graph.getNode(id);
-          function $setRoot() {
-              if(this.config.multitree && clickedNode.data.$orn) {
-                var orn = clickedNode.data.$orn;
-                var opp = {
-                    'left': 'right',
-                    'right': 'left',
-                    'top': 'bottom',
-                    'bottom': 'top'
-                }[orn];
-                rootNode.data.$orn = opp;
-                (function tag(rootNode) {
-                    rootNode.eachSubnode(function(n) {
-                      if(n.id != id) {
-                        n.data.$orn = opp;
-                        tag(n);
-                      }
-                    });
-                })(rootNode);
-                delete clickedNode.data.$orn;
-              }
-              this.root = id;
-              this.clickedNode = clickedNode;
-              this.graph.computeLevels(this.root, 0, "ignore");
-              this.geom.setRightLevelToShow(clickedNode, canvas, {
-                execHide: false,
-                onShow: function(node) {
-                  if(!node.drawn) {
+        	var rootNode = this.graph.getNode(this.root);
+        	var clickedNode = this.graph.getNode(id);
+        	function $setRoot() {
+            	if(this.config.multitree && clickedNode.data.$orn) {
+            		var orn = clickedNode.data.$orn;
+            		var opp = {
+            				'left': 'right',
+            				'right': 'left',
+            				'top': 'bottom',
+            				'bottom': 'top'
+            		}[orn];
+            		rootNode.data.$orn = opp;
+            		(function tag(rootNode) {
+                		rootNode.eachSubnode(function(n) {
+                			if(n.id != id) {
+                				n.data.$orn = opp;
+                				tag(n);
+                			}
+                		});
+            		})(rootNode);
+            		delete clickedNode.data.$orn;
+            	}
+            	this.root = id;
+            	this.clickedNode = clickedNode;
+            	this.graph.computeLevels(this.root, 0, "ignore");
+            	this.geom.setRightLevelToShow(clickedNode, canvas, {
+            	  execHide: false,
+            	  onShow: function(node) {
+            	    if(!node.drawn) {
                     node.drawn = true;
                     node.setData('alpha', 1, 'end');
                     node.setData('alpha', 0);
                     node.pos.setc(clickedNode.pos.x, clickedNode.pos.y);
-                  }
-                }
-              });
+            	    }
+            	  }
+            	});
               this.compute('end');
               this.busy = true;
               this.fx.animate({
@@ -8870,18 +8870,18 @@ $jit.ST= (function() {
                   });
                 }
               });
-          }
+        	}
 
-          // delete previous orientations (if any)
-          delete rootNode.data.$orns;
+        	// delete previous orientations (if any)
+        	delete rootNode.data.$orns;
 
-          if(method == 'animate') {
-            $setRoot.call(this);
-            that.selectPath(clickedNode);
-          } else if(method == 'replot') {
-            $setRoot.call(this);
-            this.select(this.root);
-          }
+        	if(method == 'animate') {
+        	  $setRoot.call(this);
+        	  that.selectPath(clickedNode);
+        	} else if(method == 'replot') {
+        		$setRoot.call(this);
+        		this.select(this.root);
+        	}
      },
 
      /*
@@ -9012,14 +9012,14 @@ $jit.ST= (function() {
 
         (start code js)
           st.onClick('mynodeid', {
-            Move: {
-              enable: true,
-              offsetX: 30,
-              offsetY: 5
-            },
-            onComplete: function() {
-                alert('yay!');
-            }
+	          Move: {
+	          	enable: true,
+	            offsetX: 30,
+	            offsetY: 5
+	          },
+	          onComplete: function() {
+	              alert('yay!');
+	          }
           });
         (end code)
     
@@ -9028,7 +9028,7 @@ $jit.ST= (function() {
         var canvas = this.canvas, that = this, Geom = this.geom, config = this.config;
         var innerController = {
             Move: {
-              enable: true,
+        	    enable: true,
               offsetX: config.offsetX || 0,
               offsetY: config.offsetY || 0  
             },
@@ -9044,7 +9044,7 @@ $jit.ST= (function() {
             this.busy = true;
             var node = this.graph.getNode(id);
             this.selectPath(node, this.clickedNode);
-            this.clickedNode = node;
+           	this.clickedNode = node;
             complete.onBeforeCompute(node);
             complete.onBeforeRequest(node);
             this.requestNodes(node, {
@@ -9218,21 +9218,21 @@ $jit.ST.Group = new Class({
         var config = this.config;
         this.prepare(nodes);
         $.each(nodes, function(n) {
-          // check for root nodes if multitree
-          if(config.multitree && !('$orn' in n.data)) {
-            delete n.data.$orns;
-            var orns = ' ';
-            n.eachSubnode(function(ch) {
-              if(('$orn' in ch.data) 
-                  && orns.indexOf(ch.data.$orn) < 0 
-                  && ch.exist && !ch.drawn) {
-                orns += ch.data.$orn + ' ';
-              }
-            });
-            n.data.$orns = orns;
-          }
+        	// check for root nodes if multitree
+        	if(config.multitree && !('$orn' in n.data)) {
+        		delete n.data.$orns;
+        		var orns = ' ';
+        		n.eachSubnode(function(ch) {
+        			if(('$orn' in ch.data) 
+        					&& orns.indexOf(ch.data.$orn) < 0 
+        					&& ch.exist && !ch.drawn) {
+        				orns += ch.data.$orn + ' ';
+        			}
+        		});
+        		n.data.$orns = orns;
+        	}
             n.eachLevel(0, config.levelsToShow, function(n) {
-              if(n.exist) n.drawn = true;
+            	if(n.exist) n.drawn = true;
             });     
         });
     },
@@ -9250,9 +9250,9 @@ $jit.ST.Group = new Class({
         nodes.sort(function(a, b) { return (a._depth <= b._depth) - (a._depth >= b._depth); });
         for(var i=0; i<nodes.length; i++) {
             if(nodes[i].anySubnode("exist")) {
-              for (var j = i+1, desc = false; !desc && j < nodes.length; j++) {
+            	for (var j = i+1, desc = false; !desc && j < nodes.length; j++) {
                     if(!config.multitree || '$orn' in nodes[j].data) {
-                    desc = desc || nodes[i].isDescendantOf(nodes[j].id);                      
+                		desc = desc || nodes[i].isDescendantOf(nodes[j].id);                    	
                     }
                 }
                 if(!desc) ans.push(nodes[i]);
@@ -9277,17 +9277,17 @@ $jit.ST.Group = new Class({
           var orns = root && node.data.$orns;
           node.eachSubgraph(function(n) { 
             // TODO(nico): Cleanup
-            // special check for root node subnodes when
-            // multitree is checked.
-            if(root && orns && orns.indexOf(n.data.$orn) > 0 
-                && n.drawn) {
-              n.drawn = false;
+        	  // special check for root node subnodes when
+        	  // multitree is checked.
+        	  if(root && orns && orns.indexOf(n.data.$orn) > 0 
+        			  && n.drawn) {
+        		  n.drawn = false;
                   nds[node.id].push(n);
               } else if((!root || !orns) && n.drawn) {
                 n.drawn = false;
                 nds[node.id].push(n);
               }
-            }); 
+            });	
             node.drawn = true;
         }
         // plot the whole (non-scaled) tree
@@ -9349,7 +9349,7 @@ $jit.ST.Geom = new Class({
        You should usually use <ST.switchPosition> instead.
     */  
     switchOrientation: function(orn) {
-      this.config.orientation = orn;
+    	this.config.orientation = orn;
     },
 
     /*
@@ -9357,7 +9357,7 @@ $jit.ST.Geom = new Class({
        Works like a CSS property, either _top-right-bottom-left_ or _top|bottom - left|right_.
      */
     dispatch: function() {
-        // TODO(nico) should store Array.prototype.slice.call somewhere.
+    	  // TODO(nico) should store Array.prototype.slice.call somewhere.
         var args = Array.prototype.slice.call(arguments);
         var s = args.shift(), len = args.length;
         var val = function(a) { return typeof a == 'function'? a() : a; };
@@ -9381,8 +9381,8 @@ $jit.ST.Geom = new Class({
         var data = n.data, config = this.config;
         var siblingOffset = config.siblingOffset;
         var s = (config.multitree 
-            && ('$orn' in data) 
-            && data.$orn) || config.orientation;
+        		&& ('$orn' in data) 
+        		&& data.$orn) || config.orientation;
         var w = n.getData('width') + siblingOffset;
         var h = n.getData('height') + siblingOffset;
         if(!invert)
@@ -9420,7 +9420,7 @@ $jit.ST.Geom = new Class({
        A <Complex> number specifying the begin or end position.
     */  
     getEdge: function(node, type, s) {
-      var $C = function(a, b) { 
+    	var $C = function(a, b) { 
           return function(){
             return node.pos.add(new Complex(a, b));
           }; 
@@ -9464,8 +9464,8 @@ $jit.ST.Geom = new Class({
         var w = node.getData('width');
         var h = node.getData('height');
         var s = (this.config.multitree 
-            && ('$orn' in node.data) 
-            && node.data.$orn) || this.config.orientation;
+        		&& ('$orn' in node.data) 
+        		&& node.data.$orn) || this.config.orientation;
 
         var $C = function(a, b) { 
           return function(){
@@ -9498,8 +9498,8 @@ $jit.ST.Geom = new Class({
     treeFitsInCanvas: function(node, canvas, level) {
         var csize = canvas.getSize();
         var s = (this.config.multitree 
-            && ('$orn' in node.data) 
-            && node.data.$orn) || this.config.orientation;
+        		&& ('$orn' in node.data) 
+        		&& node.data.$orn) || this.config.orientation;
 
         var size = this.dispatch(s, csize.width, csize.height);
         var baseSize = this.getTreeBaseSize(node, level, function(level, node) { 
@@ -9604,19 +9604,19 @@ $jit.ST.Plot = new Class({
     },
     
     getOrientation: function(adj) {
-      var config = this.config;
-      var orn = config.orientation;
+    	var config = this.config;
+    	var orn = config.orientation;
 
-      if(config.multitree) {
-          var nodeFrom = adj.nodeFrom;
-          var nodeTo = adj.nodeTo;
-        orn = (('$orn' in nodeFrom.data) 
-            && nodeFrom.data.$orn) 
-            || (('$orn' in nodeTo.data) 
-            && nodeTo.data.$orn);
-      }
+    	if(config.multitree) {
+        	var nodeFrom = adj.nodeFrom;
+        	var nodeTo = adj.nodeTo;
+    		orn = (('$orn' in nodeFrom.data) 
+        		&& nodeFrom.data.$orn) 
+        		|| (('$orn' in nodeTo.data) 
+        		&& nodeTo.data.$orn);
+    	}
 
-      return orn; 
+    	return orn; 
     }
 });
 
@@ -15722,7 +15722,7 @@ TM.Plot.NodeTypes = new Class( {
           offst = config.offset,
           titleHeight = config.titleHeight,
           pos = node.pos.getc(true),
-          width = node.getData('width'),
+          width = node.getData('width'),      //Added this 2 lines 15725
           height = node.getData('height'),
           border = node.getData('border'),
           ctx = canvas.getCtx(),

@@ -36,3 +36,12 @@ li p{
 	text-align:left;
 	font-weight: normal !important;
 }
+
+#selectorRow{
+	padding-top: 10px;
+    padding-bottom: 5px;
+    background: rgba(245,245,245,0.88);
+    box-shadow: 0 0 2px #999;
+    padding-left: 2%;
+    margin-bottom: 1%;
+}

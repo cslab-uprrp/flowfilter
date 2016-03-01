@@ -3,8 +3,9 @@ import cgi, cgitb
 from silk import *
 import json
 import os
-from engine import *
+from webflow import *
 from ian import *
+from TreeMap import *
 
 print """Content-Type: text/html"""
 print
@@ -30,7 +31,8 @@ if(form.has_key("data")):
 	# 	print 'sip: ', item.sip, "---- dip: ", item.dip, "---- sport: ", item.sport
 	# print flows
 
-	ForceDirected(flows)
+	# ForceDirected(flows)
+	TreeMap(flows)
 
 else:
 	printFilterPage()
