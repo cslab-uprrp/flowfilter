@@ -1,13 +1,15 @@
 function updateViz(response){
-	var response = response;
+	// var response = response;
 	// var obj = JSON.parse(response);
 	// var flows = response.split("Response")[1]
-	console.log(response);
+	var flows = response.flows;
+	// console.log(flows.length);
 	// var obj = JSON.parse(response).flows;
+	// console.log(obj.length)
 	// var obj1 = JSON.parse(obj[0])
 	// var obj = JSON.parse(flows);
 	// document.getElementById('vizDate').innerHTML =  flows + '\n <object width="1000" height="607" data="../ForceDirected/visForceDirected.html"></object>';
-	// document.getElementById('vizDate').innerHTML = flows
+	document.getElementById('vizDate').innerHTML = "<h1>" + flows.length + "</h1>"
 	// console.log(response)
 	console.log('babalisio');
 	// console.log(flows)

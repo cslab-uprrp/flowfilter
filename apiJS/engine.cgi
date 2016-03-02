@@ -24,7 +24,9 @@ form = cgi.FieldStorage()
 if(form.has_key("data")):
 	# print "Response"
 	data, startDate, endDate = receiveData(form)
+	# print 'antes'
 	flows = processData(data, startDate, endDate)
+	# print 'dsps'
 	# print """<h3> Flows: """+str(len(flows))+"""</h3>"""
 	# graph = TreeMap(flows)
 	# graph = ForceDirected(flows)

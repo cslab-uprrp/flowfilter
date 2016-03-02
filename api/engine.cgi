@@ -30,7 +30,7 @@ if(form.has_key("data")):
 	# print """<script> $('#pleaseWaitDialog').modal('show'); </script>"""
 	data, startDate, endDate = receiveData(form)
 	# print data, startDate, endDate
-	flows = processData(data, startDate, endDate)
+	flows, filePath = processData(data, startDate, endDate)
 	# f.write("2baba")
 	print """<h3> Flows: """+str(len(flows))+"""</h3>"""
 	# print flows

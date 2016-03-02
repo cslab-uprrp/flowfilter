@@ -45,3 +45,10 @@ li p{
     padding-left: 2%;
     margin-bottom: 1%;
 }
+
+#filteredDataP{
+	float: right;
+	margin-right: 20%;
+	margin-bottom: 0px;
+	margin-top: 3px;
+}

@@ -2,6 +2,7 @@
 from silk import *
 from netaddr import *
 import json
+import uuid
 
 operators = ['packets', 'bytes']
 
@@ -92,7 +93,7 @@ def processData(data, startDate, endDate):
 	for item in data:
 		if item['name'] == 'sip':
 			values = item['value'].split(',')
-			# if len(values) > 1:
+
 			for val in values:
 				it = val.split('/')		
 				if(len(it) > 1):
@@ -112,23 +113,12 @@ def processData(data, startDate, endDate):
 
 				else:
 					listOfIP.append(val.strip())
-			# else:
-			# 	it = item['value'].split('/')
-			# 	if(len(it) > 1):
-			# 		print 'entre aqui'
-			# 		netmask = IPNetwork(item['value'])
-			# 		netmaskV = netmask.version
-			# 		ipList = list(netmask)
-			# 		ipListFirst = int(ipList[0])
-			# 		ipListLast = int(ipList[-1])
-			# 	else:
-			# 		listOfIP.append(str(item['value']).strip())
 
 
 	for item in data:
 		if item['name'] == 'dip':
 			values = item['value'].split(',')
-			# if len(values) > 1:
+
 			for val in values:
 				it = val.split('/')		
 				if(len(it) > 1):
@@ -161,10 +151,17 @@ def processData(data, startDate, endDate):
 				flows.append(rec)
 				# print rec.dip
 
-	# print len(ipList)
+
 	print 'round diez mil 1'
 	print len(flows)
-	return flows
+	filePath = "usersFlows/" + str(uuid.uuid4()) + ".txt"
+	f = open(filePath, 'w')
+	f.write(toJson(flows))
+	f.close()
+
+	print 'file created succesfully'
+
+	return flows, filePath
 
 #This function will process an specific flow to see if it meets the filters
 # def processDataRec(data, rec, ipFirst, ipLast, netmaskV, listOfIP):
@@ -218,87 +215,38 @@ def processDataRec(data, rec, listOfNet, listOfIP, listOfNet_dip, listOfIP_dip):
 			if(name == 'sip'):
 				logic_ip = item['logic_filter']
 				neg_sip = item['neg_filter']
-				# print 'neg: ', neg_sip
-				# if(netmaskV):
+
 				if(listOfNet):
 					if(rec.sip.is_ipv6()):
 						recVersion = 6
 					else:
 						recVersion = 4
-					# ip = IPAddress(str(rec.sip))
+
 					for _list in listOfNet:
 						ipFirst = _list[0]
 						ipLast = _list[1]
-						netmaskV = _list[-1] #pos 2
+						netmaskV = _list[-1]
 
 						if(netmaskV == recVersion):
 							recIP = int(rec.sip)
 							if(recIP >= ipFirst and recIP <= ipLast):
-								
-								# logic_ip = item['logic_filter']
 								bool_sip = True
 								break
-								# if(item['neg_filter'] == 'not'):
-								# 	bool_sip = False
-								# else:
-								# 	bool_sip = True
-								# 	break
-							else:
-
-								#If the filter has a negation, then it will check if the sip of the current flow is not in the list of values of the sip
-								#introduced by the user.
-								# logic_ip = item['logic_filter']
-
-								# if(item['neg_filter'] == 'not'):
-								# 	if(str(rec.sip) not in listOfIP):
-								# 		bool_sip = True
-								# 		break
-								# 	else:
-								# 		bool_sip = False
-								#else, it will check if the sip of the current flow is in the list of values
-								#of the sip introduced by the user
-								# else:
-								if(str(rec.sip) in listOfIP):
-									bool_sip = True
-									break
-								else:
-									bool_sip = False
-										
-						else:
-							# logic_ip = item['logic_filter']
-
-							#If the filter has a negation, then it will check if the sip of the current flow is not in the list of values of the sip
-							#introduced by the user.
-
-							# if(item['neg_filter'] == 'not'):
-							# 	if(str(rec.sip) not in listOfIP):
+							# else:
+							# 	if(str(rec.sip) in listOfIP):
 							# 		bool_sip = True
+							# 		break
 							# 	else:
 							# 		bool_sip = False
+									
 
-							#else, it will check if the sip of the current flow is in the list of values
-							#of the sip introduced by the user
-							# else:
-							if(str(rec.sip) in listOfIP):
-								bool_sip = True	
-								break
-							else:
-								bool_sip = False
+						if(str(rec.sip) in listOfIP):
+							bool_sip = True	
+							break
+						else:
+							bool_sip = False
 				else:	
-					# sip_value = convertIP(item['value'])
-					sip_value = listOfIP
-					# logic_ip = item['logic_filter']
-					#If the filter has a negation, then it will check if the sip of the current flow is not in the list of values of the sip
-					#introduced by the user.
-					# if(item['neg_filter'] == 'not'):
-					# 	if(str(rec.sip) not in sip_value):
-					# 		bool_sip = True
-					# 	else:
-					# 		bool_sip = False
-					#else, it will check if the sip of the current flow is in the list of values
-					#of the sip introduced by the user
-					# else:
-					if(str(rec.sip) in sip_value):
+					if(str(rec.sip) in listOfIP):
 						bool_sip = True	
 					else:
 						bool_sip = False
@@ -316,62 +264,29 @@ def processDataRec(data, rec, listOfNet, listOfIP, listOfNet_dip, listOfIP_dip):
 						recVersion = 6
 					else:
 						recVersion = 4
-					# recDip = IPAddress(str(rec.dip))
+
 					for item in listOfNet_dip:
 						netmaskV = item[-1]
 						firstDip = item[0]
 						lastDip = item[1]
 
-						# print len(listOfNet_dip)
-
-
-
 						if(netmaskV == recVersion):
 							dipInt = int(rec.dip)
 							if(dipInt >= firstDip and dipInt <= lastDip):	
-								# print 'entre'
 								bool_dip = True
 								break
-							else:
-								# print str(recDip)
-								if(str(rec.dip) in listOfIP_dip):
-									# print 'dentro del if in'
-									bool_dip = True
-									break
-									# break
-								else:
-									# print 'else del if in'
-									bool_dip = False
+						
+						if(str(rec.dip) in listOfIP_dip):
+							bool_dip = True
+							break
 						else:
-							if(str(rec.dip) in listOfIP_dip):
-								bool_dip = True
-								break
-							else:
-								bool_dip = False
-
+							bool_dip = False
 
 				else:
 					if(str(rec.dip) in listOfIP_dip):
 						bool_dip = True
 					else:
 						bool_dip = False
-
-				# dip_value = convertIP(item['value'])
-
-				#If the filter has a negation, then it will check if the sip of the current flow is not in the list of values 
-				#of the dip introduced by the user.
-				# if(item['neg_filter'] == 'not'):
-				# 	if(str(rec.dip) not in dip_value):
-				# 		bool_dip = True
-				# 	else:
-				# 		bool_dip = False
-				#else, it will check if the sip of the current flow is in the list of values
-				#of the dip introduced by the user
-				# else:
-				# 	if(str(rec.dip) in dip_value):
-				# 		bool_dip = True	
-				# 	else:
-				# 		bool_dip = False
 
 			#if the filter is sport (source port), then it will get the values from the dictionary and will convert each port 
 			#to int, then it will set the logic of the filter, if it is and/or (this will be used later)
@@ -562,7 +477,7 @@ def processDataRec(data, rec, listOfNet, listOfIP, listOfNet_dip, listOfIP_dip):
 						bool_dip = not bool_dip
 
 					if(mid_ip == 'and'):
-						result = bool_sip and (bool_dip)
+						result = bool_sip and bool_dip
 					elif(mid_ip == 'or'):
 						result = bool_sip or bool_dip
 				#else, the result is just that first item
@@ -580,11 +495,11 @@ def processDataRec(data, rec, listOfNet, listOfIP, listOfNet_dip, listOfIP_dip):
 					bool_sip = not bool_sip
 
 				if('dip' in keys_toRemove):
+					keys_toRemove.remove('dip')
 
 					if(neg_dip == "not"):
 						bool_dip = not bool_dip
 
-					keys_toRemove.remove('dip')
 					if(logic_ip == 'and'):
 						if(mid_ip == 'and'):
 							result = result and (bool_sip and bool_dip)
@@ -643,11 +558,11 @@ def processDataRec(data, rec, listOfNet, listOfIP, listOfNet_dip, listOfIP_dip):
 					bool_dip = not bool_dip
 
 				if('sip' in keys_toRemove):
+					keys_toRemove.remove('sip')
 
 					if(neg_sip == "not"):
 						bool_sip = not bool_sip
 
-					keys_toRemove.remove('sip')
 					if(logic_ip == 'and'):
 						if(mid_ip == 'and'):
 							result = result and (bool_sip and bool_dip)
