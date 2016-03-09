@@ -20,6 +20,9 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
     $scope.selectedFilTemp = []
     $scope.selectedFilters = []
 
+    $scope.filteredData = false
+    $scope.filePath = $("#filePathI").val()
+
     // Time period in which the data will be considered
     $scope.start_date = new Date()
     $scope.end_date = new Date()
@@ -453,6 +456,8 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
 
         $scope.updateSelectedFilters()
         $finalData = {data: $scope.selectedFilters,
+            filteredData: $scope.filteredData,
+            path: $("#filePathI").val(),
             start: $scope.start_date.getFullYear() + "/" + ($scope.start_date.getMonth()+1) + "/" + $scope.start_date.getDate(),
             end: $scope.end_date.getFullYear() + "/" + ($scope.end_date.getMonth()+1) + "/" + $scope.end_date.getDate()
         }
@@ -466,8 +471,11 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
                 data:   $finalData
             }
         }).success(function(response) {
-            updateViz(response)
+            // console.log(response)
+            updateViz(response.flows)
             $('#pleaseWaitDialog').modal('hide');
+            $('#filteredDataP').removeClass('hidden');
+            $("#filePathI").val(response.path);
             // this callback will be called asynchronously
             // when the response is available
           }). 

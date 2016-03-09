@@ -20,6 +20,9 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
     $scope.selectedFilTemp = []
     $scope.selectedFilters = []
 
+    $scope.filteredData = false
+    $scope.filePath = $("#filePathI").val()
+
     // Time period in which the data will be considered
     $scope.start_date = new Date()
     $scope.end_date = new Date(); 
@@ -457,7 +460,10 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
     // filter the data in the server
     $scope.getResults = function(){
         $scope.updateSelectedFilters()
+
         $finalData = {data: $scope.selectedFilters,
+            filteredData: $scope.filteredData,
+            path: $scope.filePath,
             start: $scope.start_date.getFullYear() + "/" + ($scope.start_date.getMonth()+1) + "/" + $scope.start_date.getDate(),
             end: $scope.end_date.getFullYear() + "/" + ($scope.end_date.getMonth()+1) + "/" + $scope.end_date.getDate()
         }

@@ -3,6 +3,41 @@ from silk import *
 from netaddr import *
 import json
 import uuid
+import sys
+
+class Map(dict):
+    """
+    Example:
+    m = Map({'first_name': 'Eduardo'}, last_name='Pool', age=24, sports=['Soccer'])
+    """
+    def __init__(self, *args, **kwargs):
+        super(Map, self).__init__(*args, **kwargs)
+        for arg in args:
+            if isinstance(arg, dict):
+                for k, v in arg.iteritems():
+                    self[k] = v
+
+        if kwargs:
+            for k, v in kwargs.iteritems():
+                self[k] = v
+
+    def __getattr__(self, attr):
+        return self.get(attr)
+
+    def __setattr__(self, key, value):
+        self.__setitem__(key, value)
+
+    def __setitem__(self, key, value):
+        super(Map, self).__setitem__(key, value)
+        self.__dict__.update({key: value})
+
+    def __delattr__(self, item):
+        self.__delitem__(item)
+
+    def __delitem__(self, key):
+        super(Map, self).__delitem__(key)
+        del self.__dict__[key]
+
 
 operators = ['packets', 'bytes']
 
@@ -22,6 +57,11 @@ def printFilterPage():
 	f = open('webpage/index.html', 'r')
 	f = f.read()
 	print f
+
+	print """
+	<script> 
+		$('#filteredDataP').removeClass('hidden')
+	</script>"""
 
 #Helper function to convert each IP into a string to be compare with the Silk IP
 def convertIP(values):
@@ -67,15 +107,15 @@ def toJson(silkDic):
 		rJson['dip'] = str(item.dip)
 		rJson['finnoack'] = item.finnoack
 		jsonDic.append(rJson)
-	# result = {}
-	# result['flows'] = jsonDic
+	
 	jsonDic = json.dumps({'flows': jsonDic})
-	# print jsonDic
 	return jsonDic
 
 #This function is the one that will iterate through all the flows from startDate to endDate
-def processData(data, startDate, endDate):
+def processData(data, startDate, endDate, useFilteredData, pathOfFilteredData):
 	flows = [] #List to save all the flows that meet the filters 
+	filePath = "usersFlows/" + str(uuid.uuid4()) + ".txt"
+	f = open(filePath, 'w')
 
 	netmask = 0
 	ipList = 0
@@ -140,26 +180,59 @@ def processData(data, startDate, endDate):
 					listOfIP_dip.append(val.strip())
 
 
-	print listOfNet_dip
-	print 
-	print listOfIP_dip
+	# print listOfNet_dip
+	# print 
+	# print listOfIP_dip
 
-	for filename in FGlob(classname="all", type="all", start_date=startDate, end_date=endDate, site_config_file="/data/conf-v9/silk.conf", data_rootdir="/scratch/flow/rwflowpack"):
-		for rec in silkfile_open(filename, READ): #reading the flow file
+	if(useFilteredData):
+		# print pathOfFilteredData
+		newFile = open('%s'%(pathOfFilteredData), 'r')
+		filteredData = json.loads(newFile.read())
+		filtereDflows = filteredData['flows']
+
+		for rec in filtereDflows:
+			rec = Map(rec)
+
 			if(processDataRec(data, rec, listOfNet, listOfIP, listOfNet_dip, listOfIP_dip)):
-			# if(processDataRec(data, rec, ipListFirst, ipListLast, netmaskV, listOfIP)): #if the flow (rec) meet the filters then I will add it to the flows list
 				flows.append(rec)
-				# print rec.dip
+
+		# print len(flows)
+
+		# print 'dsps'
+		newFile.close()
+	else:
+
+		for filename in FGlob(classname="all", type="all", start_date=startDate, end_date=endDate, site_config_file="/data/conf-v9/silk.conf", data_rootdir="/scratch/flow/rwflowpack"):
+			for rec in silkfile_open(filename, READ): #reading the flow file
+				if(processDataRec(data, rec, listOfNet, listOfIP, listOfNet_dip, listOfIP_dip)):
+				# if(processDataRec(data, rec, ipListFirst, ipListLast, netmaskV, listOfIP)): #if the flow (rec) meet the filters then I will add it to the flows list
+					flows.append(rec)
+					# print rec.dip
 
 
-	print 'round diez mil 1'
-	print len(flows)
-	filePath = "usersFlows/" + str(uuid.uuid4()) + ".txt"
-	f = open(filePath, 'w')
+		# print 'round diez mil 1'
+		# print len(flows)
+		# sample = {'baba': [1,2,3,4,5,6]}
+		# data = {'flows': toJson(flows)}
+		# print baba
+		# try:
+		# jsonFlows = json.dump(data, f)
 	f.write(toJson(flows))
+	# except:
+		# e = sys.exc_info()[1]
+		# print "<p>Error: %s</p>" % e 
+
+	# f.write(baba)
+
 	f.close()
 
-	print 'file created succesfully'
+	# print 'file created succesfully'
+
+	print """ 
+		<script>
+			$("#filePathI").val("%s");
+		</script>
+	"""%(filePath)
 
 	return flows, filePath
 
