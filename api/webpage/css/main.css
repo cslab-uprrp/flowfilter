@@ -31,6 +31,10 @@ li p{
     margin-right: -10px;
 }
 
+#pagination{
+	margin: 0px;
+}
+
 #filterValue{
 	width:120px;
 	text-align:left;

@@ -20,6 +20,9 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
     $scope.selectedFilTemp = []
     $scope.selectedFilters = []
 
+    $scope.current_page = 1;
+    $scope.records_per_page = 10;
+
     $scope.filteredData = false
     $scope.filePath = $("#filePathI").val()
 
@@ -445,6 +448,107 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
         else{
             return false
         }
+    }
+
+    $scope.prevPage = function()
+    {
+        if ($scope.current_page > 1) {
+            $scope.current_page--;
+            $scope.changePage($scope.current_page);
+        }
+    }
+
+    $scope.nextPage = function()
+    {
+        if ($scope.current_page < $scope.numPages()) {
+            $scope.current_page++;
+            $scope.changePage($scope.current_page);
+        }
+    }
+        
+    $scope.changePage = function(page)
+    {
+        var btn_next = document.getElementById("btn_next");
+        var btn_prev = document.getElementById("btn_prev");
+        // var listing_table = document.getElementById("listingTable");
+        var page_span = document.getElementById("page");
+
+        var table = document.getElementById("flowsTable");
+        var flowsTableBody = document.createElement('tbody');
+        var oldTbody = document.getElementById("flowsTableBody");
+        flowsTableBody.setAttribute('id', 'flowsTableBody');
+        oldTbody.parentNode.replaceChild(flowsTableBody, oldTbody);
+
+        // Validate page
+        if (page < 1) page = 1;
+        if (page > $scope.numPages()) page = $scope.numPages();
+        page_span.innerHTML = page;
+
+        // listing_table.innerHTML = "";
+
+        document.getElementById("firstEntryInTable").innerHTML = ((page-1) * $scope.records_per_page)+1
+        // $("firstEntryInTable").html((page-1) * $scope.records_per_page);
+        var i = 0;
+        for (i = (page-1) * $scope.records_per_page; i < (page * $scope.records_per_page); i++) {
+
+            if(i == $scope.objJson.length)
+                break;
+
+            var tr = document.createElement("tr");
+            var tdSip = document.createElement("td");
+            var tdDip = document.createElement("td");
+            var tdBytes = document.createElement("td");
+            tdSip.appendChild(document.createTextNode($scope.objJson[i].sip));
+            tdDip.appendChild(document.createTextNode($scope.objJson[i].dip));
+            tdBytes.appendChild(document.createTextNode($scope.objJson[i].dport));
+
+            tr.appendChild(tdSip);
+            tr.appendChild(tdDip);
+            tr.appendChild(tdBytes);
+
+            flowsTableBody.appendChild(tr)
+
+            // listing_table.innerHTML += $scope.objJson[i].dip + "<br>";
+            if(page == $scope.numPages()){
+                // btn_next.style.visibility = "hidden";
+                $("#li_next").addClass('disabled');
+            }
+        }
+        document.getElementById("lastEntryInTable").innerHTML = i;
+        // $("lastEntryInTable").html(i);
+        // oldTbody.parentNode.replaceChild(flowsTableBody, oldTbody);
+        table.appendChild(flowsTableBody);
+
+        page_span.innerHTML = page;
+
+        if (page == 1) {
+            // btn_prev.style.visibility = "hidden";
+            $("#li_prev").addClass('disabled');
+        } else {
+            // btn_prev.style.visibility = "visible";
+            $("#li_prev").removeClass('disabled');
+        }
+
+        if (page == $scope.numPages()) {
+            // btn_next.style.visibility = "hidden";
+            $("#li_next").addClass('disabled');
+        } else {
+            // btn_next.style.visibility = "visible";
+            $("#li_next").removeClass('disabled');
+        }
+    }
+
+    $scope.numPages = function()
+    {
+        return Math.ceil($scope.objJson.length / $scope.records_per_page);
+    }
+
+    $scope.changeEntries = function(entries){
+        $scope.records_per_page = entries;
+        var dropDownButton = document.getElementById("dropDownButton");
+        dropDownButton.innerHTML = entries + ' <span class="caret"></span>';
+        $scope.current_page = 1;
+        $scope.changePage(1);
     }
 
     // This function will update the value of a filter when the user change it in the form
