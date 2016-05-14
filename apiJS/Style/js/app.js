@@ -27,13 +27,6 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
     $scope.records_per_page = 10;
     $scope.current_page = 1;
 
-    // $scope.records_per_page = 10;
-
-    // $scope.entries = -1;
-
-    // $scope.objJson = []
-    // $scope.amountOfEntries = 0
-
     $scope.filteredData = false
     $scope.filePath = $("#filePathI").val()
 
@@ -455,118 +448,9 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
         }
     }
 
-    // $scope.prevPage = function()
-    // {
-    //     // if ($scope.current_page > 1) {
-    //     //     $scope.current_page--;
-    //     //     $scope.changePage($scope.current_page);
-    //     // }
-
-    //     if ($scope.current_page > 1){
-    //         $scope.current_page--;
-
-    //         $getEntries = {
-    //             first: ($scope.current_page-1) * $scope.records_per_page,
-    //             last: $scope.current_page * $scope.records_per_page,
-    //             path: $("#filePathI").val()
-    //         }
-
-    //         $http({
-    //             method: 'GET',
-    //             // url: 'http://lagrange.ccom.uprrp.edu/~jdelacruz/webflows/gui/processData.cgi',
-    //             // url: 'http://wolverine.ccom.uprrp.edu/~jdelacruz/netFlows/processData.cgi',
-    //             url: engineUrl,
-    //             params: {
-    //                 entries:   $getEntries
-    //             }
-    //         }).success(function(response) {
-    //             // console.log('volví');
-    //             // $scope.objJson = JSON.parse(response.flows).flows;
-
-    //             $scope.objJson = response.entries
-    //             $scope.changePage($scope.current_page);
-    //             // updateViz(response.flows)
-    //             // $scope.objJson = JSON.parse(response.flows).flows;
-    //             // $scope.changePage(1);
-
-    //             // $('#pleaseWaitDialog').modal('hide');
-    //             // $('#filteredDataP').removeClass('hidden');
-    //             // $("#filePathI").val(response.path);
-    //             // $('#flowsTableSec').removeClass('hidden'); 
-
-    //             // document.getElementById('amountOfEntries').innerHTML = $scope.objJson.length;
-    //             // this callback will be called asynchronously
-    //             // when the response is available
-    //           }). 
-    //             error(function(response) {
-    //             // called asynchronously if an error occurs
-    //             // or server returns response with an error status.
-    //           });
-    //         // if ($scope.current_page < $scope.numPages()) {
-    //         //     $scope.current_page++;
-    //         //     $scope.changePage($scope.current_page);
-    //         // }
-    //         // $scope.changePage($scope.current_page);
-    //     }
-
-    // }
-
-    // $scope.nextPage = function()
-    // {
-    //     if ($scope.current_page < $scope.numPages()){
-    //         $scope.current_page++;
-
-    //         $getEntries = {
-    //             first: ($scope.current_page-1) * $scope.records_per_page,
-    //             last: $scope.current_page * $scope.records_per_page,
-    //             path: $("#filePathI").val()
-    //         }
-
-    //         $http({
-    //             method: 'GET',
-    //             // url: 'http://lagrange.ccom.uprrp.edu/~jdelacruz/webflows/gui/processData.cgi',
-    //             // url: 'http://wolverine.ccom.uprrp.edu/~jdelacruz/netFlows/processData.cgi',
-    //             url: engineUrl,
-    //             params: {
-    //                 entries:   $getEntries
-    //             }
-    //         }).success(function(response) {
-    //             // console.log('volví');
-    //             // $scope.objJson = JSON.parse(response.flows).flows;
-
-    //             $scope.objJson = response.entries
-    //             $scope.changePage($scope.current_page);
-    //             // updateViz(response.flows)
-    //             // $scope.objJson = JSON.parse(response.flows).flows;
-    //             // $scope.changePage(1);
-
-    //             // $('#pleaseWaitDialog').modal('hide');
-    //             // $('#filteredDataP').removeClass('hidden');
-    //             // $("#filePathI").val(response.path);
-    //             // $('#flowsTableSec').removeClass('hidden'); 
-
-    //             // document.getElementById('amountOfEntries').innerHTML = $scope.objJson.length;
-    //             // this callback will be called asynchronously
-    //             // when the response is available
-    //           }). 
-    //             error(function(response) {
-    //             // called asynchronously if an error occurs
-    //             // or server returns response with an error status.
-    //           });
-    //         // if ($scope.current_page < $scope.numPages()) {
-    //         //     $scope.current_page++;
-    //         //     $scope.changePage($scope.current_page);
-    //         // }
-    //         // $scope.changePage($scope.current_page);
-    //     }
-    // }
         
     $scope.changePage = function(page)
     {
-        // var btn_next = document.getElementById("btn_next");
-        // var btn_prev = document.getElementById("btn_prev");
-        // var listing_table = document.getElementById("listingTable");
-        // var page_span = document.getElementById("current_page");
 
         var table = document.getElementById("flowsTable");
         var flowsTableBody = document.createElement('tbody');
@@ -577,23 +461,7 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
         // Validate page
         if (page < 1) page = 1;
         if (page > $scope.numPages()) page = $scope.numPages();
-        // page_span.innerHTML = page;
 
-        // listing_table.innerHTML = "";
-
-
-        // if($scope.objJson.length == 0){
-        //     document.getElementById("firstEntryInTable").innerHTML = 0;
-        // }
-        // else{
-        //     document.getElementById("firstEntryInTable").innerHTML = ((page-1) * $scope.records_per_page)+1;
-        // }
-        
-        // document.getElementById("lastEntryInTable").innerHTML = $scope.objJson.length*$scope.current_page;
-
-        // $("firstEntryInTable").html((page-1) * $scope.records_per_page);
-        // var i = 0;
-        // for (i = (page-1) * $scope.records_per_page; i < (page * $scope.records_per_page); i++) {
         for(var i = 0; i < $scope.objJson.length; i++){
 
             if(i == $scope.objJson.length)
@@ -623,35 +491,9 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
             tr.appendChild(tdPackets);
 
             flowsTableBody.appendChild(tr)
-
-            // listing_table.innerHTML += $scope.objJson[i].dip + "<br>";
-            // if(page == $scope.numPages()){
-            //     // btn_next.style.visibility = "hidden";
-            //     $("#li_next").addClass('disabled');
-            // }
         }
-        // document.getElementById("lastEntryInTable").innerHTML = i;
-        // $("lastEntryInTable").html(i);
-        // oldTbody.parentNode.replaceChild(flowsTableBody, oldTbody);
+
         table.appendChild(flowsTableBody);
-
-        // page_span.innerHTML = page;
-
-        // if (page == 1) {
-        //     // btn_prev.style.visibility = "hidden";
-        //     $("#li_prev").addClass('disabled');
-        // } else {
-        //     // btn_prev.style.visibility = "visible";
-        //     $("#li_prev").removeClass('disabled');
-        // }
-
-        // if (page == $scope.numPages()) {
-        //     // btn_next.style.visibility = "hidden";
-        //     $("#li_next").addClass('disabled');
-        // } else {
-        //     // btn_next.style.visibility = "visible";
-        //     $("#li_next").removeClass('disabled');
-        // }
     }
 
     $scope.numPages = function()
@@ -692,7 +534,6 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
                 // called asynchronously if an error occurs
                 // or server returns response with an error status.
               });
-        // $scope.changePage(1);
     }
 
 
@@ -736,34 +577,20 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
 
         $http({
             method: 'GET',
-            // url: 'http://lagrange.ccom.uprrp.edu/~jdelacruz/webflows/gui/processData.cgi',
-            // url: 'http://wolverine.ccom.uprrp.edu/~jdelacruz/netFlows/processData.cgi',
-            // url: 'http://wolverine.ccom.uprrp.edu/~jdelacruz/netFlows/apiJS/engine.cgi',
             url: engineUrl,
             params: {
                 data:   $finalData
             }
         }).success(function(response) {
             updateViz(response.flows, response.totalFlows)
-            // $scope.jsonFlows = JSON.parse(response.flows).flows;
-            $scope.amountOfFlows = response.totalFlows;
-            
-            // $scope.amountOfEntries = response.totalFlows;
-            // $scope.objJson = $scope.jsonFlows.slice(0,10);
-            // $scope.changePage(1);
 
+            $scope.amountOfFlows = response.totalFlows;
             $('#pleaseWaitDialog').modal('hide');
             $('#filteredDataP').removeClass('hidden');
             $('#mainEntriesDiv').removeClass('hidden');
             $("#filePathI").val(response.path);
 
             $scope.validateNextPrev(1);
-            
-
-            // $('#flowsTableSec').removeClass('hidden'); 
-            // document.getElementById('amountOfEntries').innerHTML = $scope.amountOfEntries;
-
-
 
             // this callback will be called asynchronously
             // when the response is available
@@ -834,7 +661,6 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
                     entries:   $getEntries
                 }
             }).success(function(response) {
-                console.log("Im back biach");
 
                 updateViz(response.entries, response.totalFlows);
                 $scope.amountOfFlows = response.totalFlows;

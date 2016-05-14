@@ -48,28 +48,9 @@ if(form.has_key("data")):
 			 	console.log('data');
 			 </script>
 	"""
-
-	# tableView.setTableValues%(current_page, records_per_page, flows, amountOfEntries)
 	print tableView.setTableValues%(1, entries, str(fl), len(flows))
 	print tableView.sectionTableTag
 	print tableView.initTableScript
-
-	hideLoading()
-	showViz()
-
-	# graph = TreeMap(flows)
-	# print graph
-	# graph = ForceDirected(flows)
-
-	# print '<br/>'
-	# for fl in flows:
-		# print '<br/>'
-		# print fl.sip
-		# print fl.sport
-
-	# print 'blaba'
-	# time.sleep(3)
-	# print """<script> $('#pleaseWaitDialog').modal('hide'); </script>"""
 
 elif form.has_key("entries"):
 	info = form.getvalue("entries")
@@ -98,7 +79,6 @@ elif form.has_key("entries"):
 	"""
 
 	print tableView.setFilePath%(path)
-	# tableView.setTableValues%(current_page, records_per_page, flows, amountOfEntries)
 	print tableView.setTableValues%(current_page, (last - first), str(fl), len(filtereDflows))
 	print tableView.sectionTableTag
 	print tableView.initTableScript

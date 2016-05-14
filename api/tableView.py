@@ -72,9 +72,6 @@ sectionTableTag = """
 initTableScript = """
 	<script>
 		changePage(current_page);
-		// document.getElementById("numPagesDiv").innerHTML = 'Page: <span id="page">'+current_page+'</span>/'+numPages();
-		// document.getElementById("amountOfEntries").innerHTML = amountOfEntries;
-		// document.getElementById("lastEntryInTable").innerHTML = objJson.length*current_page
 		var dropDownButton = document.getElementById("dropDownButton");
     	dropDownButton.innerHTML = records_per_page + ' <span class="caret"></span>';
     	validateNextPrev(current_page);

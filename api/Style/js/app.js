@@ -449,30 +449,9 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
             return false
         }
     }
-
-    $scope.prevPage = function()
-    {
-        if ($scope.current_page > 1) {
-            $scope.current_page--;
-            $scope.changePage($scope.current_page);
-        }
-    }
-
-    $scope.nextPage = function()
-    {
-        if ($scope.current_page < $scope.numPages()) {
-            $scope.current_page++;
-            $scope.changePage($scope.current_page);
-        }
-    }
         
     $scope.changePage = function(page)
     {
-        var btn_next = document.getElementById("btn_next");
-        var btn_prev = document.getElementById("btn_prev");
-        // var listing_table = document.getElementById("listingTable");
-        var page_span = document.getElementById("page");
-
         var table = document.getElementById("flowsTable");
         var flowsTableBody = document.createElement('tbody');
         var oldTbody = document.getElementById("flowsTableBody");
@@ -482,13 +461,7 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
         // Validate page
         if (page < 1) page = 1;
         if (page > $scope.numPages()) page = $scope.numPages();
-        page_span.innerHTML = page;
 
-        // listing_table.innerHTML = "";
-
-        document.getElementById("firstEntryInTable").innerHTML = ((page-1) * $scope.records_per_page)+1
-        // $("firstEntryInTable").html((page-1) * $scope.records_per_page);
-        var i = 0;
         for (i = (page-1) * $scope.records_per_page; i < (page * $scope.records_per_page); i++) {
 
             if(i == $scope.objJson.length)
@@ -507,35 +480,9 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
             tr.appendChild(tdBytes);
 
             flowsTableBody.appendChild(tr)
-
-            // listing_table.innerHTML += $scope.objJson[i].dip + "<br>";
-            if(page == $scope.numPages()){
-                // btn_next.style.visibility = "hidden";
-                $("#li_next").addClass('disabled');
-            }
         }
-        document.getElementById("lastEntryInTable").innerHTML = i;
-        // $("lastEntryInTable").html(i);
-        // oldTbody.parentNode.replaceChild(flowsTableBody, oldTbody);
+
         table.appendChild(flowsTableBody);
-
-        page_span.innerHTML = page;
-
-        if (page == 1) {
-            // btn_prev.style.visibility = "hidden";
-            $("#li_prev").addClass('disabled');
-        } else {
-            // btn_prev.style.visibility = "visible";
-            $("#li_prev").removeClass('disabled');
-        }
-
-        if (page == $scope.numPages()) {
-            // btn_next.style.visibility = "hidden";
-            $("#li_next").addClass('disabled');
-        } else {
-            // btn_next.style.visibility = "visible";
-            $("#li_next").removeClass('disabled');
-        }
     }
 
     $scope.numPages = function()

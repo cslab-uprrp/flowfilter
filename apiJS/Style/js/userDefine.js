@@ -12,8 +12,5 @@ function updateViz(response, totalFlows){
 
 		document.getElementById('vizDate').innerHTML = "<h1>" + totalFlows + "</h1>"
 		$('#vizDiv').removeClass('hidden');
-		// console.log(totalFlows);
-		// console.log('babalisio');
-		// console.log(JSON.parse(response).flows);
 	}
 }
