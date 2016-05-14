@@ -1,0 +1,60 @@
+ul{
+	list-style-type: none;
+	display:inline;
+}
+
+li p{
+	position: relative;	
+	left: 10px;
+}
+
+.nav li a{
+	padding: 5px 10px;
+}
+
+.btn{
+	background-image: none!important;
+}
+
+.col-md-4 {
+	padding: 0px;
+	width: 31%;
+}
+
+.col-md-2 {
+	padding: 0px;
+}
+
+.col-md-1 {
+	padding: 0px;
+    width: 11%;
+    margin-right: -10px;
+}
+
+#pagination{
+	margin: 0px;
+}
+
+#filterValue{
+	width:120px;
+	text-align:left;
+	font-weight: normal !important;
+}
+
+#selectorRow{
+	padding-top: 10px;
+    padding-bottom: 5px;
+    background: rgba(245,245,245,0.88);
+    box-shadow: 0 0 2px #999;
+    padding-left: 2%;
+    margin-bottom: 1%;
+    margin-left: 0%;
+    margin-right: 0%;
+}
+
+#filteredDataP{
+	float: right;
+	margin-right: 20%;
+	margin-bottom: 0px;
+	margin-top: 3px;
+}

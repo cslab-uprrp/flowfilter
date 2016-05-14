@@ -108,7 +108,7 @@ def toJson(silkDic):
 #This function is the one that will iterate through all the flows from startDate to endDate
 def processData(data, startDate, endDate, useFilteredData, pathOfFilteredData):
 	flows = [] #List to save all the flows that meet the filters 
-	filePath = "usersFlows/" + str(uuid.uuid4()) + ".txt"
+	filePath = "../usersFlows/" + str(uuid.uuid4()) + ".txt"
 	f = open(filePath, 'w')
 
 	netmask = 0

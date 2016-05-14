@@ -54,14 +54,28 @@ firstDict = {
 
 #This function will print out the filter selector tool
 def printFilterPage():
-	f = open('webpage/index.html', 'r')
+	f = open('index.html', 'r')
 	f = f.read()
 	print f
 
 	print """
-	<script> 
-		$('#filteredDataP').removeClass('hidden')
+	<script>
+		$('#filteredDataP').removeClass('hidden');
+		$('#mainEntriesDiv').removeClass('hidden');
 	</script>"""
+
+def hideLoading():
+	print """
+		<script>
+			$('#loading').addClass('hidden');
+		</script>
+	"""
+def showViz():
+	print """
+		<script>
+			$('#vizDiv').removeClass('hidden');
+		</script>
+	"""
 
 #Helper function to convert each IP into a string to be compare with the Silk IP
 def convertIP(values):
@@ -114,13 +128,13 @@ def toJson(silkDic):
 #This function is the one that will iterate through all the flows from startDate to endDate
 def processData(data, startDate, endDate, useFilteredData, pathOfFilteredData):
 	flows = [] #List to save all the flows that meet the filters 
-	filePath = "usersFlows/" + str(uuid.uuid4()) + ".txt"
+	filePath = "../usersFlows/" + str(uuid.uuid4()) + ".txt"
 	f = open(filePath, 'w')
 
 	netmask = 0
-	ipList = 0
-	ipListFirst = 0
-	ipListLast = 0
+	# ipList = 0
+	ipListF = 0
+	ipListL = 0
 	netmaskV = 0
 
 
@@ -141,12 +155,15 @@ def processData(data, startDate, endDate, useFilteredData, pathOfFilteredData):
 					netmask = IPNetwork(val.strip())
 					netmaskV = netmask.version
 
-					ipList = list(netmask)
-					ipListFirst = int(ipList[0])
-					ipListLast = int(ipList[-1])
+					ipListF = netmask.first
+					ipListL = netmask.last
 
-					newNet.append(ipListFirst)
-					newNet.append(ipListLast)
+					# ipList = list(netmask)
+					# ipListFirst = int(ipList[0])
+					# ipListLast = int(ipList[-1])
+
+					newNet.append(ipListF)
+					newNet.append(ipListL)
 					newNet.append(netmaskV)
 
 					listOfNet.append(newNet)
@@ -166,12 +183,15 @@ def processData(data, startDate, endDate, useFilteredData, pathOfFilteredData):
 					netmask = IPNetwork(val.strip())
 					netmaskV = netmask.version
 
-					ipList = list(netmask)
-					ipListFirst = int(ipList[0])
-					ipListLast = int(ipList[-1])
+					ipListF = netmask.first
+					ipListL = netmask.last
 
-					newNet.append(ipListFirst)
-					newNet.append(ipListLast)
+					# ipList = list(netmask)
+					# ipListFirst = int(ipList[0])
+					# ipListLast = int(ipList[-1])
+
+					newNet.append(ipListF)
+					newNet.append(ipListL)
 					newNet.append(netmaskV)
 
 					listOfNet_dip.append(newNet)
