@@ -5,6 +5,7 @@ import json
 import os
 import time
 from webflow import *
+sys.path.append("Visualizations")
 from ian import *
 from TreeMap import *
 import tableView
@@ -48,9 +49,13 @@ if(form.has_key("data")):
 			 	console.log('data');
 			 </script>
 	"""
-	print tableView.setTableValues%(1, entries, str(fl), len(flows))
-	print tableView.sectionTableTag
-	print tableView.initTableScript
+
+	if(len(flows) != 0):
+		print tableView.setTableValues%(1, entries, str(fl), len(flows))
+		print tableView.sectionTableTag
+		print tableView.initTableScript
+	else:
+		zeroFlows()
 
 elif form.has_key("entries"):
 	info = form.getvalue("entries")

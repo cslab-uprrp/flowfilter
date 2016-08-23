@@ -516,8 +516,10 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
             filteredData: $scope.filteredData,
             entries: $("#selectEntries").val(),
             path: $scope.filePath,
-            start: $scope.start_date.getFullYear() + "/" + ($scope.start_date.getMonth()+1) + "/" + $scope.start_date.getDate(),
-            end: $scope.end_date.getFullYear() + "/" + ($scope.end_date.getMonth()+1) + "/" + $scope.end_date.getDate()
+            // start: $scope.start_date.getFullYear() + "/" + ($scope.start_date.getMonth()+1) + "/" + $scope.start_date.getDate(),
+            // end: $scope.end_date.getFullYear() + "/" + ($scope.end_date.getMonth()+1) + "/" + $scope.end_date.getDate()
+            start: $scope.formatDate($("#from").val()),
+            end: $scope.formatDate($("#to").val())
         }
 
         var theForm = document.forms['myForm'];
@@ -529,4 +531,16 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
         theForm.appendChild(input);
         document.myForm.submit()
     }
+
+    // Helper function to format the date. It should be in the format YYYY/MM/DD 
+    $scope.formatDate = function (date){
+        result = "";
+        newDate = date.split("/"); 
+        result += newDate[2] + "/"; // Year
+        result += newDate[0] + "/"; // Month
+        result += newDate[1];       // Day
+
+        return result;
+    }
+
 }]);

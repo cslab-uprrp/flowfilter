@@ -31,8 +31,8 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
     $scope.filePath = $("#filePathI").val()
 
     // Time period in which the data will be considered
-    $scope.start_date = new Date()
-    $scope.end_date = new Date()
+    // $scope.start_date = new Date()
+    // $scope.end_date = new Date()
 
     // In this dictionary will be the value that the user enter in the form for each filter and also the logic for
     // each one of them
@@ -571,8 +571,10 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
             filteredData: $scope.filteredData,
             entries: $("#selectEntries").val(),
             path: $("#filePathI").val(),
-            start: $scope.start_date.getFullYear() + "/" + ($scope.start_date.getMonth()+1) + "/" + $scope.start_date.getDate(),
-            end: $scope.end_date.getFullYear() + "/" + ($scope.end_date.getMonth()+1) + "/" + $scope.end_date.getDate()
+            start: $scope.formatDate($("#from").val()),
+            end: $scope.formatDate($("#to").val())
+            // start: $scope.start_date.getFullYear() + "/" + ($scope.start_date.getMonth()+1) + "/" + $scope.start_date.getDate(),
+            // end: $scope.end_date.getFullYear() + "/" + ($scope.end_date.getMonth()+1) + "/" + $scope.end_date.getDate()
         }
 
         $http({
@@ -590,7 +592,13 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
             $('#mainEntriesDiv').removeClass('hidden');
             $("#filePathI").val(response.path);
 
-            $scope.validateNextPrev(1);
+            if(response.totalFlows == 0){
+                $scope.validateNextPrev(0);                
+                $scope.zeroFlows();
+            }
+            else{
+                $scope.validateNextPrev(1);
+            }
 
             // this callback will be called asynchronously
             // when the response is available
@@ -706,12 +714,33 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
             document.getElementById("lastEntry").innerHTML = lastEntry;
         }
         else{
+
+            if ($scope.records_per_page == -1)
+                $scope.records_per_page = $scope.amountOfFlows
+
             firstEntry = ((page-1) * $scope.records_per_page) + 1;
             lastEntry = firstEntry + ($scope.records_per_page - 1);
 
             document.getElementById("firstEntry").innerHTML = firstEntry;
             document.getElementById("lastEntry").innerHTML = lastEntry;
         }
+    }
+
+    $scope.zeroFlows = function(){
+        $scope.amountOfEntries = 0;
+        document.getElementById('amountOfEntries').innerHTML = 0;
+        $('#vizDiv').addClass('hidden');
+    }
+
+    // Helper function to format the date. It should be in the format YYYY/MM/DD 
+    $scope.formatDate = function (date){
+        result = "";
+        newDate = date.split("/"); 
+        result += newDate[2] + "/"; // Year
+        result += newDate[0] + "/"; // Month
+        result += newDate[1];       // Day
+
+        return result;
     }
 
 }]);

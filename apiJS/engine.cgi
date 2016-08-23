@@ -4,6 +4,7 @@ from silk import *
 import json
 import os
 from webflow import *
+sys.path.append("Visualizations")
 from ian import *
 from TreeMap import *
 

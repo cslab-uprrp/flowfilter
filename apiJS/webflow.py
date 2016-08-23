@@ -1,6 +1,7 @@
 #!/usr/bin/python
 from silk import *
 from netaddr import *
+import config
 import json
 import uuid
 import sys
@@ -53,7 +54,7 @@ firstDict = {
 
 #This function will print out the filter selector tool
 def printFilterPage():
-	f = open('webpage/index.html', 'r')
+	f = open('index.html', 'r')
 	f = f.read()
 	print f
 
@@ -104,6 +105,100 @@ def toJson(silkDic):
 	jsonDic = json.dumps({'flows': jsonDic})
 	return jsonDic
 
+def toJsonInt(silkDic):
+	jsonDic = []
+	for item in silkDic:
+		rJson = {}
+		rJson['sip'] = int(item.sip)
+		rJson['protocol'] = item.protocol
+		rJson['timeout_killed'] = item.timeout_killed
+		rJson['dport'] = int(item.dport)
+		rJson['output'] = item.output
+		rJson['packets'] = int(item.packets)
+		rJson['bytes'] = int(item.bytes)
+		rJson['tcpflags'] = str(item.tcpflags)
+		rJson['uniform_packets'] = item.uniform_packets
+		rJson['application'] = item.application
+		rJson['sensor_id'] = item.sensor_id
+		rJson['timeout_started'] = item.timeout_started
+		rJson['classtype_id'] = item.classtype_id
+		rJson['stime'] = str(item.stime)
+		rJson['nhip'] = str(item.nhip)
+		rJson['duration'] = str(item.duration)
+		rJson['input'] = item.input
+		rJson['sport'] = int(item.sport)
+		rJson['dip'] = int(item.dip)
+		rJson['finnoack'] = item.finnoack
+		jsonDic.append(rJson)
+
+	jsonDic = json.dumps({'flows': jsonDic})
+	return jsonDic
+
+def toJsonInt6(silkDic):
+	jsonDic = []
+	for item in silkDic:
+		rJson = {}
+
+		sip = IPAddress(str(item.sip)).ipv6()
+		dip = IPAddress(str(item.dip)).ipv6()
+
+		rJson['sip'] = int(sip)
+		rJson['protocol'] = item.protocol
+		rJson['timeout_killed'] = item.timeout_killed
+		rJson['dport'] = int(item.dport)
+		rJson['output'] = item.output
+		rJson['packets'] = int(item.packets)
+		rJson['bytes'] = int(item.bytes)
+		rJson['tcpflags'] = str(item.tcpflags)
+		rJson['uniform_packets'] = item.uniform_packets
+		rJson['application'] = item.application
+		rJson['sensor_id'] = item.sensor_id
+		rJson['timeout_started'] = item.timeout_started
+		rJson['classtype_id'] = item.classtype_id
+		rJson['stime'] = str(item.stime)
+		rJson['nhip'] = str(item.nhip)
+		rJson['duration'] = str(item.duration)
+		rJson['input'] = item.input
+		rJson['sport'] = int(item.sport)
+		rJson['dip'] = int(dip)
+		rJson['finnoack'] = item.finnoack
+		jsonDic.append(rJson)
+
+	jsonDic = json.dumps({'flows': jsonDic})
+	return jsonDic
+
+def toJsonInt4(silkDic):
+	jsonDic = []
+	for item in silkDic:
+		rJson = {}
+		
+		sip = IPAddress(str(item.sip)).ipv4()
+		dip = IPAddress(str(item.dip)).ipv4()
+
+		rJson['sip'] = int(sip)
+		rJson['protocol'] = item.protocol
+		rJson['timeout_killed'] = item.timeout_killed
+		rJson['dport'] = int(item.dport)
+		rJson['output'] = item.output
+		rJson['packets'] = int(item.packets)
+		rJson['bytes'] = int(item.bytes)
+		rJson['tcpflags'] = str(item.tcpflags)
+		rJson['uniform_packets'] = item.uniform_packets
+		rJson['application'] = item.application
+		rJson['sensor_id'] = item.sensor_id
+		rJson['timeout_started'] = item.timeout_started
+		rJson['classtype_id'] = item.classtype_id
+		rJson['stime'] = str(item.stime)
+		rJson['nhip'] = str(item.nhip)
+		rJson['duration'] = str(item.duration)
+		rJson['input'] = item.input
+		rJson['sport'] = int(item.sport)
+		rJson['dip'] = int(dip)
+		rJson['finnoack'] = item.finnoack
+		jsonDic.append(rJson)
+
+	jsonDic = json.dumps({'flows': jsonDic})
+	return jsonDic
 
 #This function is the one that will iterate through all the flows from startDate to endDate
 def processData(data, startDate, endDate, useFilteredData, pathOfFilteredData):
@@ -189,7 +284,7 @@ def processData(data, startDate, endDate, useFilteredData, pathOfFilteredData):
 		# print 'dsps'
 		newFile.close()
 	else:
-		for filename in FGlob(classname="all", type="all", start_date=startDate, end_date=endDate, site_config_file="/data/conf-v9/silk.conf", data_rootdir="/scratch/flow/rwflowpack"):
+		for filename in FGlob(classname="all", type="all", start_date=startDate, end_date=endDate, site_config_file=config.site_config_file, data_rootdir=config.data_rootdir):
 			for rec in silkfile_open(filename, READ): #reading the flow file
 				#if(processDataRec(data, rec)): #if the flow (rec) meet the filters then I will add it to the flows list
 				if(processDataRec(data, rec, listOfNet, listOfIP, listOfNet_dip, listOfIP_dip)):
