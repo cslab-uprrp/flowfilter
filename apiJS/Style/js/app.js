@@ -571,6 +571,7 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
             filteredData: $scope.filteredData,
             entries: $("#selectEntries").val(),
             path: $("#filePathI").val(),
+            vis: $("#selectVis").val(),
             start: $scope.formatDate($("#from").val()),
             end: $scope.formatDate($("#to").val())
             // start: $scope.start_date.getFullYear() + "/" + ($scope.start_date.getMonth()+1) + "/" + $scope.start_date.getDate(),

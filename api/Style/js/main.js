@@ -43,6 +43,35 @@ function validateNextPrev(page){
 
 }
 
+function prevEntries()
+{
+    if (current_page > 1){
+
+        $('#loading').removeClass('hidden');
+        $('#vizDiv').addClass('hidden');
+
+        current_page--;
+
+        getEntries = {
+            first: (current_page-1) * records_per_page,
+            last: current_page * records_per_page,
+            currentPage: current_page,
+            path: $("#filePathI").val(),
+            vis: $("#selectVis").val()
+        }
+
+        validateNextPrev(current_page);
+
+        var theForm = document.forms['myForm'];
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'entries';
+        input.value = JSON.stringify(getEntries)
+        theForm.appendChild(input);
+        document.myForm.submit()
+    }
+}
+
 function nextEntries()
 {   
     if (current_page < numPages()){
@@ -56,7 +85,8 @@ function nextEntries()
             first: (current_page-1) * records_per_page,
             last: current_page * records_per_page,
             currentPage: current_page,
-            path: $("#filePathI").val()
+            path: $("#filePathI").val(),
+            vis: $("#selectVis").val()
         }
 
         validateNextPrev(current_page);

@@ -48,6 +48,10 @@ function changePage(page)
 }
 
 function changeEntries(entries){
+
+    $('#loading').removeClass('hidden');
+    $('#vizDiv').addClass('hidden');
+
     records_per_page = entries;
     var dropDownButton = document.getElementById("dropDownButton");
     dropDownButton.innerHTML = entries + ' <span class="caret"></span>';
@@ -59,7 +63,8 @@ function changeEntries(entries){
         first: (current_page-1) * records_per_page,
         last: current_page * records_per_page,
         currentPage: current_page,
-        path: $("#filePathI").val()
+        path: $("#filePathI").val(),
+        vis: $("#selectVis").val()
     }
 
     var theForm = document.forms['myForm'];
@@ -70,3 +75,4 @@ function changeEntries(entries){
     theForm.appendChild(input);
     document.myForm.submit()
 }
+
