@@ -70,3 +70,29 @@ li p{
 #leftmostNotDiv{
 	padding-left: 2%!important;
 }
+
+#brTimeFrame{
+	margin-bottom: 10px;
+}
+
+#timeFrameLabelDiv{
+	text-align: right;
+	width: auto;
+}
+
+#timeFrameInputDiv{
+	text-align: left;
+	padding: 0px;
+	width: auto;
+	z-index: 100;
+}
+
+#labelSelectDiv{
+	text-align: right;
+	width: auto;
+}
+
+#inputSelectDiv{
+	text-align: left;
+	width: auto;
+}

@@ -169,30 +169,34 @@ def toJsonInt6(silkDic):
 	for item in silkDic:
 		rJson = {}
 
-		sip = IPAddress(str(item.sip)).ipv6()
-		dip = IPAddress(str(item.dip)).ipv6()
+		try:
+			sip = IPAddress(str(item.sip)).ipv6()
+			dip = IPAddress(str(item.dip)).ipv6()
 
-		rJson['sip'] = int(sip)
-		rJson['protocol'] = item.protocol
-		rJson['timeout_killed'] = item.timeout_killed
-		rJson['dport'] = int(item.dport)
-		rJson['output'] = item.output
-		rJson['packets'] = int(item.packets)
-		rJson['bytes'] = int(item.bytes)
-		rJson['tcpflags'] = str(item.tcpflags)
-		rJson['uniform_packets'] = item.uniform_packets
-		rJson['application'] = item.application
-		rJson['sensor_id'] = item.sensor_id
-		rJson['timeout_started'] = item.timeout_started
-		rJson['classtype_id'] = item.classtype_id
-		rJson['stime'] = str(item.stime)
-		rJson['nhip'] = str(item.nhip)
-		rJson['duration'] = str(item.duration)
-		rJson['input'] = item.input
-		rJson['sport'] = int(item.sport)
-		rJson['dip'] = int(dip)
-		rJson['finnoack'] = item.finnoack
-		jsonDic.append(rJson)
+			rJson['sip'] = int(sip)
+			rJson['protocol'] = item.protocol
+			rJson['timeout_killed'] = item.timeout_killed
+			rJson['dport'] = int(item.dport)
+			rJson['output'] = item.output
+			rJson['packets'] = int(item.packets)
+			rJson['bytes'] = int(item.bytes)
+			rJson['tcpflags'] = str(item.tcpflags)
+			rJson['uniform_packets'] = item.uniform_packets
+			rJson['application'] = item.application
+			rJson['sensor_id'] = item.sensor_id
+			rJson['timeout_started'] = item.timeout_started
+			rJson['classtype_id'] = item.classtype_id
+			rJson['stime'] = str(item.stime)
+			rJson['nhip'] = str(item.nhip)
+			rJson['duration'] = str(item.duration)
+			rJson['input'] = item.input
+			rJson['sport'] = int(item.sport)
+			rJson['dip'] = int(dip)
+			rJson['finnoack'] = item.finnoack
+			jsonDic.append(rJson)
+
+		except:
+			pass
 
 	jsonDic = json.dumps({'flows': jsonDic})
 	return jsonDic
@@ -202,36 +206,41 @@ def toJsonInt4(silkDic):
 	for item in silkDic:
 		rJson = {}
 		
-		sip = IPAddress(str(item.sip)).ipv4()
-		dip = IPAddress(str(item.dip)).ipv4()
 
-		rJson['sip'] = int(sip)
-		rJson['protocol'] = item.protocol
-		rJson['timeout_killed'] = item.timeout_killed
-		rJson['dport'] = int(item.dport)
-		rJson['output'] = item.output
-		rJson['packets'] = int(item.packets)
-		rJson['bytes'] = int(item.bytes)
-		rJson['tcpflags'] = str(item.tcpflags)
-		rJson['uniform_packets'] = item.uniform_packets
-		rJson['application'] = item.application
-		rJson['sensor_id'] = item.sensor_id
-		rJson['timeout_started'] = item.timeout_started
-		rJson['classtype_id'] = item.classtype_id
-		rJson['stime'] = str(item.stime)
-		rJson['nhip'] = str(item.nhip)
-		rJson['duration'] = str(item.duration)
-		rJson['input'] = item.input
-		rJson['sport'] = int(item.sport)
-		rJson['dip'] = int(dip)
-		rJson['finnoack'] = item.finnoack
-		jsonDic.append(rJson)
+		try:
+			sip = IPAddress(str(item.sip)).ipv4()
+			dip = IPAddress(str(item.dip)).ipv4()
+
+			rJson['sip'] = int(sip)
+			rJson['protocol'] = item.protocol
+			rJson['timeout_killed'] = item.timeout_killed
+			rJson['dport'] = int(item.dport)
+			rJson['output'] = item.output
+			rJson['packets'] = int(item.packets)
+			rJson['bytes'] = int(item.bytes)
+			rJson['tcpflags'] = str(item.tcpflags)
+			rJson['uniform_packets'] = item.uniform_packets
+			rJson['application'] = item.application
+			rJson['sensor_id'] = item.sensor_id
+			rJson['timeout_started'] = item.timeout_started
+			rJson['classtype_id'] = item.classtype_id
+			rJson['stime'] = str(item.stime)
+			rJson['nhip'] = str(item.nhip)
+			rJson['duration'] = str(item.duration)
+			rJson['input'] = item.input
+			rJson['sport'] = int(item.sport)
+			rJson['dip'] = int(dip)
+			rJson['finnoack'] = item.finnoack
+			jsonDic.append(rJson)
+
+		except:
+			pass
 
 	jsonDic = json.dumps({'flows': jsonDic})
 	return jsonDic
 
 #This function is the one that will iterate through all the flows from startDate to endDate
-def processData(data, startDate, endDate, useFilteredData, pathOfFilteredData):
+def processData(data, startDate, endDate, startTime, endTime, useFilteredData, pathOfFilteredData):
 	flows = [] #List to save all the flows that meet the filters 
 	filePath = "../usersFlows/" + str(uuid.uuid4()) + ".txt"
 	f = open(filePath, 'w')
@@ -326,6 +335,9 @@ def processData(data, startDate, endDate, useFilteredData, pathOfFilteredData):
 		# print 'dsps'
 		newFile.close()
 	else:
+
+		startDate = startDate + ":" + startTime
+		endDate = endDate + ":" + endTime
 
 		for filename in FGlob(classname="all", type="all", start_date=startDate, end_date=endDate, site_config_file=config.site_config_file, data_rootdir=config.data_rootdir):
 			for rec in silkfile_open(filename, READ): #reading the flow file

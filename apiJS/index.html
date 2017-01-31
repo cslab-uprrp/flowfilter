@@ -68,13 +68,40 @@
 						    </ul>
 					  	</div>
 					</div>
-					<div style="text-align: center; width: 66%;">
+					<div style="text-align: center;">
 
-						<label for="from">From</label>
+						<div class="row">
+							<div id="timeFrameLabelDiv" class="col-sm-2">
+								<label for="from">Start date</label>
+								<br id="brTimeFrame">
+								<label for="selectstarttime">Start time</label>
+							</div>
+							<div id="timeFrameInputDiv" class="col-sm-3">
+								<input type="text" id="from" name="from">
+								<br id="brTimeFrame">
+								<select name = "starttime" id='selectstarttime' class="selectpicker show-tick" data-width="fit">
+									<option value = "00" > 00 </option>
+								</select>
+							</div>
+							<div id="timeFrameLabelDiv" class="col-sm-2">
+								<label for="to">End date</label>
+								<br id="brTimeFrame">
+								<label for="selectendtime">End time</label>
+							</div>
+							<div id="timeFrameInputDiv" class="col-sm-3">
+								<input type="text" id="to" name="to">
+								<br id="brTimeFrame">
+								<select name = "endtime" id='selectendtime' class="selectpicker show-tick" data-width="fit">
+									<option value = "00" > 00 </option>
+								</select>
+							</div>
+						</div>
+
+<!-- 						<label for="from">From</label>
 						<input type="text" id="from" name="from">
 						
 						<label for="to">to</label>
-						<input type="text" id="to" name="to">
+						<input type="text" id="to" name="to"> -->
 
 <!-- 						Start date: <input name ="startDate" type="date" ng-click = "buttonDep()" ng-model="start_date" value="2015-10-28"/>
 
@@ -92,7 +119,54 @@
 			  			{{filter.template}}
 			  		</div>
 			  	</div>
-			  	<div class="container" style="text-align: center; margin-bottom: 10px;">
+
+			  							<div class="container" style="width:70%;">
+						  	<div class="row">
+						  		<div class="col-sm-4">
+						  			<div class="form-group">
+						  				<label for="selectipversion">IP version</label>
+						  				<select name = "ipversion" id='selectipversion' class="form-control">
+											<option value = "4" > 4 </option>
+											<option value = "6" > 6 </option>
+											<option value = "2" > Both </option>
+										</select>
+						  			</div>
+						  		</div>
+
+						  		<div class="col-sm-4">
+						  			<div class="form-group">
+						  				<label for="selectEntries">Entries</label>
+
+									  	<select name = 'entries' id='selectEntries' class="form-control" data-width="fit" onchange="showInput(this);">
+											<option value = "-1" > all </option>
+											<option value = "10" > 10 </option>
+											<option value = "25" > 25 </option>
+											<option value = "50" > 50 </option>
+											<option value = "100"> 100 </option>
+											<option value = "Other"> Other </option>
+										</select>
+										<br>
+										<input id="inputEntries" class="hidden" type="text" name="otherEntries">
+						  			</div>
+						  		</div>
+
+						  		<div class="col-sm-4">
+						  			<div class="form-group">
+						  				<label for="selectVis">Visualization</label>
+						  				<select name = "vis" id='selectVis' class="form-control" data-width="fit">
+											<option value = "1" > Table </option>
+											<option value = "2" > Force Directed </option>
+											<option value = "3" > Tree Map </option>
+											<option value = "4" > Data Map </option>
+											<option value = "5" > Cube </option>
+											<option value = "6" > Plain text </option>
+										</select>
+						  			</div>
+						  		</div>
+
+						  	</div>
+						  </div>
+<!-- 			  	<div class="container" style="text-align: center; margin-bottom: 10px;">
 				  	Show
 					<select id='selectEntries' class="selectpicker show-tick" data-width="fit">
 						<option value = "-1" > all </option>
@@ -112,7 +186,7 @@
 						<option value = "3" > Tree Map </option>
 						<option value = "4" > Data Map </option>
 					</select>
-			  	</div>
+			  	</div> -->
 
 				<div class="container" style="text-align:center;">
 			  		<button type="submit" class="btn btn-default" style="width: 50%;" ng-disabled="disableButton">Submit</button>
@@ -208,6 +282,9 @@
 		</table>
 	</section>
 </div>
+
+		<!-- Helper JS -->
+		<script type="text/javascript" src="Style/js/helpers.js" ></script>
 		<script>
 				// dynamically activate list items when clicked
 				$(".nav.nav-pills li").on("click",function(){

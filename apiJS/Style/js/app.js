@@ -100,147 +100,119 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
     // packets and bytes. When we use this template, we just need to pass the name of the filter and its partner
     // (i.e. source ip and destination ip) which are going to be name1 and name2 respectively.
     $scope.template = ' \
-    <div class="row"> \
-        <div id = "leftmostLogic" class="col-md-1"> \
-            <div ng-show = "checkIfLogic(\'name1\', \'name2\')"> \
-                <div class="btn-group" data-toggle="buttons"> \
-                      <label class="btn btn-primary" ng-click="updateLogic(\'name1\', \'name2\', \'or\')"> \
-                        <input type="radio" name="options" id="option1" autocomplete="off" checked> or \
-                      </label> \
-                      <label class="btn btn-primary active" ng-click="updateLogic(\'name1\', \'name2\', \'and\')"> \
-                        <input type="radio" name="options" id="option2" autocomplete="off"> and \
-                      </label> \
-                </div> \
-            </div> \
-        </div> \
-        <div id = "leftmostNotDiv" class="col-md-1"> \
-                <div class="btn-group" data-toggle="buttons"> \
-                    <label class="btn btn-danger" ng-click="updateNeg(\'name1\')"> \
-                        <input type="checkbox"/> NOT \
-                    </label> \
-                </div> \
-        </div> \
-        \
-        <div class="col-md-4" ng-show="FiltersDict[\'name1-e\']" class="ng-hide"> \
-            <ul> \
-                <li class="pull-left"> \
-                    <button ng-click="removeFilter(\'name1\', \'name2\')" type="button" class="btn btn-danger" aria-label="Left Align"> \
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> \
-                    </button> \
-            </li> \
-            <li class="pull-left"> \
-                    <p> \
-                        <label id="filterValue"> \
-                            value1: \
-                        </label> \
-                        <input type="text" ng-model="FiltersDict[\'name1-val\']"> \
-                    </p> \
-                </li> \
-            </ul> \
-        </div> \
-    \
-        <div class="col-md-2" ng-show = "FiltersDict[\'name1-e\'] && FiltersDict[\'name2-e\']"> \
-            <div> \
-                <div class="btn-group" data-toggle="buttons" > \
-                  <label class="btn btn-primary" ng-click="updateMidLogic(\'name1\', \'name2\', \'or\')"> \
-                    <input type="radio" name="options" id="option1" autocomplete="off" checked> or \
-                  </label> \
-                  <label class="btn btn-primary active" ng-click="updateMidLogic(\'name1\',\'name2\', \'and\')"> \
-                    <input type="radio" name="options" id="option2" autocomplete="off"> and \
-                  </label> \
-                </div>   \
-                  <div class="btn-group" data-toggle="buttons"> \
-                    <label class="btn btn-danger" ng-click="updateNeg(\'name2\')"> \
-                        <input type="checkbox"> NOT \
-                    </label>             \
-                  </div>     \
-            </div> \
-        </div> \
-        \
-        <div class="col-md-4" ng-show="FiltersDict[\'name2-e\']" class="ng-hide"> \
-            <ul>  \
-                <li class="pull-left"> \
-                    <button ng-click="removeFilter(\'name2\', \'name1\')" type="button" class="btn btn-danger" aria-label="Left Align"> \
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> \
-                    </button> \
-                </li> \
-                <li class="pull-left"> \
-                    <p> \
-                        <label id="filterValue">\
-                            value2:\
-                        </label>\
-                        <input type="text" ng-model="FiltersDict[\'name2-val\']">\
-                    </p> \
-                </li> \
-            </ul> \
-        </div> \
-    </div>'
+    <div class="row" style="margin-bottom: 10px;"> \
+  <div class="col-lg-2" style="padding-top:40px;"> \
+    <div ng-show = "checkIfLogic(\'name1\', \'name2\')"> \
+      <div class="btn-group" data-toggle="buttons"> \
+        <label class="btn btn-default"> \
+          <input type="radio" name="options" id="option1" autocomplete="off" checked> OR \
+        </label> \
+        <label class="btn btn-default active"> \
+          <input type="radio" name="options" id="option2" autocomplete="off"> AND \
+        </label> \
+      </div> \
+    </div> \
+  </div> \
+  \
+  <div class="col-lg-4" ng-show="FiltersDict[\'name1-e\']" class="ng-hide" style=" \
+    margin-top: 10px; \
+"> \
+    <b> <p> value1 </p> </b> \
+    <div class="input-group"> \
+      <span class="input-group-btn"> \
+        <button class="btn btn-default" type="button" ng-click="removeFilter(\'name1\', \'name2\')"> \
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> \
+        </button> \
+          <div class="btn-group" data-toggle="buttons">  \
+            <label class="btn btn-default" ng-click="updateNeg(\'name1\')">  \
+                <input type="checkbox"/> NOT  \
+            </label>              \
+          </div>  \
+      </span> \
+      <input type="text" class="form-control" placeholder="Search for..." ng-model="FiltersDict[\'name1-val\']"> \
+    </div><!-- /input-group --> \
+  </div><!-- /.col-lg-6 --> \
+  \
+  <div class="col-lg-2" style="padding-top:30px;" ng-show="FiltersDict[\'name1-e\'] && FiltersDict[\'name2-e\']">   \
+  <div class="btn-group" data-toggle="buttons"> \
+    <label class="btn btn-default" ng-click="updateMidLogic(\'name1\', \'name2\', \'or\')"> \
+      <input type="radio" name="options" id="option1" autocomplete="off" checked> OR \
+    </label> \
+    <label class="btn btn-default active" ng-click="updateMidLogic(\'name1\',\'name2\', \'and\')"> \
+      <input type="radio" name="options" id="option2" autocomplete="off"> AND \
+    </label> \
+  </div> \
+  </div> \
+  \
+<div class="col-lg-4" ng-show="FiltersDict[\'name2-e\']" class="ng-hide" style=" \
+    margin-top: 10px; \
+"> \
+    <b> <p> value2 </p> </b>\
+    <div class="input-group"> \
+      <span class="input-group-btn"> \
+        <button class="btn btn-default" type="button" ng-click="removeFilter(\'name2\', \'name1\')"> \
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> \
+        </button> \
+        <!-- <button class="btn btn-default" type="button"> NOT </button> --> \
+          <div class="btn-group" data-toggle="buttons">  \
+            <label class="btn btn-default" ng-click="updateNeg(\'name2\')">  \
+                <input type="checkbox"> NOT  \
+            </label>              \
+          </div>    \
+          \
+      </span> \
+      <input type="text" class="form-control" placeholder="Search for..." ng-model="FiltersDict[\'name2-val\']"> \
+    </div><!-- /input-group --> \
+  </div><!-- /.col-lg-6 --> \
+</div><!-- /.row --> '
 
     // This template is the html code for the filters form. The template will be used for all the filters
     // packets and bytes. When we use this template, we just need to pass the name of the filter in this case
     // packets or bytes.
     $scope.templateOp = ' \
-        <div class="row"> \
-                <div id = "leftmostLogic" class="col-md-1"> \
-                    <div ng-show = "checkIfLogic(\'name1\', \'name2\')"> \
-                        <div class="btn-group" data-toggle="buttons"> \
-                              <label class="btn btn-primary" ng-click="updateLogic(\'name1\', \'name2\', \'or\')"> \
-                                <input type="radio" name="options" id="option1" autocomplete="off" checked> or \
-                              </label> \
-                              <label class="btn btn-primary active" ng-click="updateLogic(\'name1\', \'name2\', \'and\')"> \
-                                <input type="radio" name="options" id="option2" autocomplete="off"> and \
-                              </label> \
-                        </div> \
-                    </div> \
-                </div> \
-                <div id = "leftmostNotDiv" class="col-md-1"> \
-                \
-                </div> \
-                <div id = "leftmostNameDiv" class="col-md-3" ng-show="FiltersDict[\'name1-e\']" class="ng-hide" style="width: 20%; padding: 0%;"> \
-                    <ul> \
-                        <li class="pull-left"> \
-                            <button ng-click="removeFilter(\'name1\', \'name2\')" type="button" class="btn btn-danger" aria-label="LeftAlign"> \
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> \
-                            </button> \
-                    </li> \
-                    <li class="pull-left"> \
-                            <p> \
-                                <label id="filterValue"> \
-                                    value1: \
-                                </label> \
-                            </p> \
-                        </li> \
-                    </ul> \
-                </div> \
-                <div class="col-md-3" style="margin-left: -6%;width: 20%; padding: 0%;">\
-                        <div class="btn-group" data-toggle="buttons"> \
-                              <label class="btn btn-primary" ng-click="updateOp(\'name1\', \'<\')"> \
-                                <input type="radio" name="options" id="option1" autocomplete="off" checked> &lt;\
-                              </label> \
-                              <label class="btn btn-primary" ng-click="updateOp(\'name1\', \'>\')"> \
-                                <input type="radio" name="options" id="option2" autocomplete="off"> &gt;\
-                              </label> \
-                              <label class="btn btn-primary active" ng-click="updateOp(\'name1\', \'=\')"> \
-                                <input type="radio" name="options" id="option1" autocomplete="off" checked> =\
-                              </label> \
-                              <label class="btn btn-primary" ng-click="updateOp(\'name1\', \'<=\')"> \
-                                <input type="radio" name="options" id="option2" autocomplete="off"> &le;\
-                              </label> \
-                              <label class="btn btn-primary" ng-click="updateOp(\'name1\', \'>=\')"> \
-                                <input type="radio" name="options" id="option2" autocomplete="off"> &ge;\
-                              </label> \
-                        </div> \
-                </div>\
-                <div class="col-md-2">\
-                    <ul>\
-                        <li class="pull-left"> \
-                                <p> \
-                                    <input type="text" ng-model="FiltersDict[\'name1-val\']"> \
-                                </p> \
-                        </li> \
-                    </ul>\
-                </div>\
-        </div>\
+<div class="row" style="margin-bottom: 10px;"> \
+  <div class="col-lg-2" style="padding-top:40px;"> \
+    <div ng-show="checkIfLogic(\'name1\', \'name2\')">  \
+        <div class="btn-group" data-toggle="buttons"> \
+            <label class="btn btn-default" ng-click="updateLogic(\'name1\', \'name2\', \'or\')"> \
+                <input type="radio" name="options" id="option1" autocomplete="off" checked> OR \
+            </label> \
+            <label class="btn btn-default active" ng-click="updateLogic(\'name1\', \'name2\', \'and\')"> \
+                <input type="radio" name="options" id="option2" autocomplete="off"> AND \
+            </label> \
+        </div> \
+    </div> \
+  </div> \
+  \
+  <div class="col-lg-5"> \
+    <b> <p> value1 </p> </b> \
+    <div class="input-group"> \
+      <span class="input-group-btn"> \
+        <button class="btn btn-default" type="button" ng-click="removeFilter(\'name1\', \'name2\')"> \
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> \
+        </button> \
+        <div class="btn-group" data-toggle="buttons" style="display: inline-flex;"> \
+        <label class="btn btn-default" ng-click="updateOp(\'name1\', \'<\')"> \
+            <input type="radio" name="options" id="option1" autocomplete="off" checked> &lt; \
+        </label> \
+        <label class="btn btn-default" ng-click="updateOp(\'name1\', \'>\')"> \
+            <input type="radio" name="options" id="option2" autocomplete="off"> &gt; \
+        </label> \
+        <label class="btn btn-default" ng-click="updateOp(\'name1\', \'=\')"> \
+            <input type="radio" name="options" id="option2" autocomplete="off"> = \
+        </label> \
+        <label class="btn btn-default" ng-click="updateOp(\'name1\', \'<=\')"> \
+            <input type="radio" name="options" id="option2" autocomplete="off"> &le; \
+        </label> \
+        <label class="btn btn-default" ng-click="updateOp(\'name1\', \'>=\')"> \
+            <input type="radio" name="options" id="option2" autocomplete="off"> &ge; \
+        </label> \
+    </div> \
+      </span> \
+      <input type="text" class="form-control" placeholder="Search for..." ng-model="FiltersDict[\'name1-val\']"> \
+    </div><!-- /input-group --> \
+  </div><!-- /.col-lg-6 --> \
+</div><!-- /.row --> \
             '
 
     // Helper function that decides if the submit button should be disabled or not
@@ -567,13 +539,24 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
         $scope.updateSelectedFilters()
         $scope.records_per_page = $("#selectEntries").val();
 
+        entries = $("#selectEntries").val()
+        
+        if(entries == "Other"){
+            entries = $("#inputEntries").val()
+        }
+
+
         $finalData = {data: $scope.selectedFilters,
             filteredData: $scope.filteredData,
-            entries: $("#selectEntries").val(),
+            entries: entries,
             path: $("#filePathI").val(),
             vis: $("#selectVis").val(),
             start: $scope.formatDate($("#from").val()),
-            end: $scope.formatDate($("#to").val())
+            end: $scope.formatDate($("#to").val()),
+            ipversion: $("#selectipversion").val(),
+            starttime: $("#selectstarttime").val(),
+            endtime: $("#selectendtime").val()
+
             // start: $scope.start_date.getFullYear() + "/" + ($scope.start_date.getMonth()+1) + "/" + $scope.start_date.getDate(),
             // end: $scope.end_date.getFullYear() + "/" + ($scope.end_date.getMonth()+1) + "/" + $scope.end_date.getDate()
         }
@@ -585,6 +568,7 @@ app.controller('QuerySelectorCtrl', ['$scope', '$http', '$window',  function($sc
                 data:   $finalData
             }
         }).success(function(response) {
+            // console.log(response)
             updateViz(response.flows, response.totalFlows)
 
             $scope.amountOfFlows = response.totalFlows;
